@@ -1,0 +1,17 @@
+ssumpf_test/src/expat
+ssumpf_test/src/libc
+ssumpf_test/src/libdrm
+ssumpf_test/src/mesa
+ssumpf_test/src/qt5_base
+ssumpf_test/src/qt5_component
+ssumpf_test/src/qt5_declarative
+ssumpf_test/raw/qt5_dejavusans
+ssumpf_test/src/qt5_quickcontrols
+ssumpf_test/src/qt5_quickcontrols2
+ssumpf_test/src/qt5_svg
+ssumpf_test/src/qt5_virtualkeyboard
+ssumpf_test/src/stdcxx
+ssumpf_test/src/vfs
+ssumpf_test/src/vfs_pipe
+ssumpf_test/src/vfs_gpu
+ssumpf_test/src/zlib
