@@ -6,6 +6,7 @@ ssumpf_test/src/qt5_base
 ssumpf_test/src/qt5_component
 ssumpf_test/src/qt5_declarative
 ssumpf_test/raw/qt5_dejavusans
+ssumpf_test/src/qt5_graphicaleffects
 ssumpf_test/src/qt5_quickcontrols
 ssumpf_test/src/qt5_quickcontrols2
 ssumpf_test/src/qt5_svg
@@ -15,3 +16,8 @@ ssumpf_test/src/vfs
 ssumpf_test/src/vfs_pipe
 ssumpf_test/src/vfs_gpu
 ssumpf_test/src/zlib
+ssumpf_test/src/ubuntu_ui_toolkit
+ssumpf_test/src/ubuntu_ui_toolkit_launcher
+ssumpf_test/raw/ubuntu_ui_toolkit_gallery
+ssumpf_test/raw/ubuntu_themes
+
