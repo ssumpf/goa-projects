@@ -1,0 +1,6 @@
+nfeske/api/libc
+nfeske/api/stdcxx
+ssumpf_test/api/mesa
+ssumpf_test/api/qt5
+ssumpf_test/api/qt5_qml
+ssumpf_test/api/qt5_component
