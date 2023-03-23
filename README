@@ -1,0 +1,19 @@
+QtQuick/QML/Ubuntu UI toolkit examples
+
+:qt5_quicktest:
+
+A simple QtQuick test (taken from Qt5) it compiles C++ using Qt5 build
+infrastructure (qmake, cmake)
+
+:ubuntu_ui_toolkit_gallery:
+
+The gallery example taken from Ubuntu UI toolkit. It only contains a packet
+recipe and downloads all requirements.
+
+:unit_converter:
+
+A minimal QML example taken from Ubuntu UI toolkit. It archives the QML code and
+contains a packet recipe that launches the application using the Ubuntu UI
+toolkits launcher.
+
+
