@@ -1,9 +1,0 @@
-cproc_test/src/expat
-cproc_test/src/libc
-cproc_test/src/mesa
-cproc_test/src/qt5_base
-cproc_test/src/qt5_component
-cproc_test/raw/qt5_dejavusans
-cproc_test/src/stdcxx
-cproc_test/src/vfs
-cproc_test/src/vfs_pipe

@@ -1,5 +1,0 @@
-cproc_test/api/libc
-cproc_test/api/qt5
-cproc_test/api/qt5_component
-cproc_test/api/so
-cproc_test/api/stdcxx
