@@ -1,6 +1,6 @@
-nfeske/api/libc
-nfeske/api/stdcxx
-ssumpf/api/mesa
-ssumpf/api/qt5
+genodelabs/api/libc
+genodelabs/api/stdcxx
+genodelabs/api/mesa
+genodelabs/api/qt5
+genodelabs/api/qt5_component
 ssumpf/api/qt5_qml
-ssumpf/api/qt5_component
