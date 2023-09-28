@@ -1,0 +1,163 @@
+bitvector_alloc T
+bitvector_dealloc T
+bitvector_left_shift T
+bitvector_set_to_zero T
+crypto_kernel B 32
+get_protect_trailer_length T
+mod_srtp D 16
+octet_string_set_to_zero T
+srtp_add_stream T
+srtp_aes_gcm_128 D 88
+srtp_aes_gcm_128_test_case_0 D 88
+srtp_aes_gcm_256 D 88
+srtp_aes_gcm_256_test_case_0 D 88
+srtp_aes_icm_128 D 88
+srtp_aes_icm_128_test_case_0 D 88
+srtp_aes_icm_192 D 88
+srtp_aes_icm_192_test_case_0 D 88
+srtp_aes_icm_256 D 88
+srtp_aes_icm_256_test_case_0 D 88
+srtp_append_salt_to_key T
+srtp_auth_get_key_length T
+srtp_auth_get_prefix_length T
+srtp_auth_get_tag_length T
+srtp_auth_type_self_test T
+srtp_auth_type_test T
+srtp_cipher_bits_per_second T
+srtp_cipher_dealloc T
+srtp_cipher_decrypt T
+srtp_cipher_encrypt T
+srtp_cipher_get_key_length T
+srtp_cipher_get_tag T
+srtp_cipher_init T
+srtp_cipher_output T
+srtp_cipher_rand_for_tests T
+srtp_cipher_rand_u32_for_tests T
+srtp_cipher_set_aad T
+srtp_cipher_set_iv T
+srtp_cipher_type_alloc T
+srtp_cipher_type_self_test T
+srtp_cipher_type_test T
+srtp_cleanse T
+srtp_create T
+srtp_crypto_alloc T
+srtp_crypto_free T
+srtp_crypto_kernel_alloc_auth T
+srtp_crypto_kernel_alloc_cipher T
+srtp_crypto_kernel_do_load_auth_type T
+srtp_crypto_kernel_get_auth_type T
+srtp_crypto_kernel_get_cipher_type T
+srtp_crypto_kernel_init T
+srtp_crypto_kernel_list_debug_modules T
+srtp_crypto_kernel_load_auth_type T
+srtp_crypto_kernel_load_cipher_type T
+srtp_crypto_kernel_load_debug_module T
+srtp_crypto_kernel_set_debug_module T
+srtp_crypto_kernel_shutdown T
+srtp_crypto_kernel_status T
+srtp_crypto_policy_set_aes_cm_128_hmac_sha1_32 T
+srtp_crypto_policy_set_aes_cm_128_null_auth T
+srtp_crypto_policy_set_aes_cm_192_hmac_sha1_32 T
+srtp_crypto_policy_set_aes_cm_192_hmac_sha1_80 T
+srtp_crypto_policy_set_aes_cm_192_null_auth T
+srtp_crypto_policy_set_aes_cm_256_hmac_sha1_32 T
+srtp_crypto_policy_set_aes_cm_256_hmac_sha1_80 T
+srtp_crypto_policy_set_aes_cm_256_null_auth T
+srtp_crypto_policy_set_aes_gcm_128_16_auth T
+srtp_crypto_policy_set_aes_gcm_128_8_auth T
+srtp_crypto_policy_set_aes_gcm_128_8_only_auth T
+srtp_crypto_policy_set_aes_gcm_256_16_auth T
+srtp_crypto_policy_set_aes_gcm_256_8_auth T
+srtp_crypto_policy_set_aes_gcm_256_8_only_auth T
+srtp_crypto_policy_set_from_profile_for_rtcp T
+srtp_crypto_policy_set_from_profile_for_rtp T
+srtp_crypto_policy_set_null_cipher_hmac_null T
+srtp_crypto_policy_set_null_cipher_hmac_sha1_80 T
+srtp_crypto_policy_set_rtcp_default T
+srtp_crypto_policy_set_rtp_default T
+srtp_dealloc T
+srtp_err_handler T
+srtp_err_report T
+srtp_err_reporting_init T
+srtp_event_reporter T
+srtp_get_protect_rtcp_trailer_length T
+srtp_get_protect_trailer_length T
+srtp_get_session_keys T
+srtp_get_session_keys_with_mki_index T
+srtp_get_stream T
+srtp_get_stream_roc T
+srtp_get_user_data T
+srtp_get_version T
+srtp_get_version_string T
+srtp_hmac D 72
+srtp_hmac_test_case_0 D 56
+srtp_index_advance T
+srtp_index_guess T
+srtp_index_init T
+srtp_init T
+srtp_inject_mki T
+srtp_install_err_report_handler T
+srtp_install_event_handler T
+srtp_install_log_handler T
+srtp_key_limit_clone T
+srtp_key_limit_set T
+srtp_key_limit_update T
+srtp_list_debug_modules T
+srtp_mod_aes_gcm D 16
+srtp_mod_aes_icm D 16
+srtp_mod_alloc D 16
+srtp_mod_auth D 16
+srtp_mod_cipher D 16
+srtp_mod_crypto_kernel D 16
+srtp_mod_hmac D 16
+srtp_nibble_to_hex_char T
+srtp_null_auth D 72
+srtp_null_cipher D 88
+srtp_octet_string_hex_string T
+srtp_octet_string_is_eq T
+srtp_profile_get_master_key_length T
+srtp_profile_get_master_salt_length T
+srtp_protect T
+srtp_protect_mki T
+srtp_protect_rtcp T
+srtp_protect_rtcp_mki T
+srtp_rdb_add_index T
+srtp_rdb_check T
+srtp_rdb_get_value T
+srtp_rdb_increment T
+srtp_rdb_init T
+srtp_rdbx_add_index T
+srtp_rdbx_check T
+srtp_rdbx_dealloc T
+srtp_rdbx_estimate_index T
+srtp_rdbx_get_packet_index T
+srtp_rdbx_get_roc T
+srtp_rdbx_get_window_size T
+srtp_rdbx_init T
+srtp_rdbx_set_roc T
+srtp_rdbx_set_roc_seq T
+srtp_remove_stream T
+srtp_replace_auth_type T
+srtp_replace_cipher_type T
+srtp_set_debug_module T
+srtp_set_stream_roc T
+srtp_set_user_data T
+srtp_shutdown T
+srtp_stream_alloc T
+srtp_stream_clone T
+srtp_stream_dealloc T
+srtp_stream_init T
+srtp_stream_init_all_master_keys T
+srtp_stream_init_keys T
+srtp_unprotect T
+srtp_unprotect_mki T
+srtp_unprotect_rtcp T
+srtp_unprotect_rtcp_mki T
+srtp_update T
+srtp_update_stream T
+srtp_validate_policy_master_keys T
+stream_get_protect_trailer_length T
+v128_bit_string T
+v128_copy_octet_string T
+v128_hex_string T
+v128_left_shift T

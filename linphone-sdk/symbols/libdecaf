@@ -1,0 +1,154 @@
+DECAF_ED25519_NO_CONTEXT D 8
+DECAF_SHA3_224_params_s R 8
+DECAF_SHA3_256_params_s R 8
+DECAF_SHA3_384_params_s R 8
+DECAF_SHA3_512_params_s R 8
+DECAF_SHAKE128_params_s R 8
+DECAF_SHAKE256_params_s R 8
+decaf_255_alignof_precomputed_s R 8
+decaf_255_base_double_scalarmul_non_secret T
+decaf_255_direct_scalarmul T
+decaf_255_invert_elligator_nonuniform T
+decaf_255_invert_elligator_uniform T
+decaf_255_point_add T
+decaf_255_point_base R 256
+decaf_255_point_cond_sel T
+decaf_255_point_debugging_pscale T
+decaf_255_point_debugging_torque T
+decaf_255_point_decode T
+decaf_255_point_decode_like_eddsa_and_mul_by_ratio T
+decaf_255_point_destroy T
+decaf_255_point_double T
+decaf_255_point_double_scalarmul T
+decaf_255_point_dual_scalarmul T
+decaf_255_point_encode T
+decaf_255_point_eq T
+decaf_255_point_from_hash_nonuniform T
+decaf_255_point_from_hash_uniform T
+decaf_255_point_identity R 256
+decaf_255_point_mul_by_ratio_and_encode_like_eddsa T
+decaf_255_point_mul_by_ratio_and_encode_like_x25519 T
+decaf_255_point_negate T
+decaf_255_point_scalarmul T
+decaf_255_point_sub T
+decaf_255_point_valid T
+decaf_255_precompute T
+decaf_255_precomputed_base D 8
+decaf_255_precomputed_destroy T
+decaf_255_precomputed_scalarmul T
+decaf_255_scalar_add T
+decaf_255_scalar_cond_sel T
+decaf_255_scalar_decode T
+decaf_255_scalar_decode_long T
+decaf_255_scalar_destroy T
+decaf_255_scalar_encode T
+decaf_255_scalar_eq T
+decaf_255_scalar_halve T
+decaf_255_scalar_invert T
+decaf_255_scalar_mul T
+decaf_255_scalar_one R 32
+decaf_255_scalar_set_unsigned T
+decaf_255_scalar_sub T
+decaf_255_scalar_zero R 32
+decaf_255_sizeof_precomputed_s R 8
+decaf_448_alignof_precomputed_s R 8
+decaf_448_base_double_scalarmul_non_secret T
+decaf_448_direct_scalarmul T
+decaf_448_invert_elligator_nonuniform T
+decaf_448_invert_elligator_uniform T
+decaf_448_point_add T
+decaf_448_point_base R 256
+decaf_448_point_cond_sel T
+decaf_448_point_debugging_pscale T
+decaf_448_point_debugging_torque T
+decaf_448_point_decode T
+decaf_448_point_decode_like_eddsa_and_mul_by_ratio T
+decaf_448_point_destroy T
+decaf_448_point_double T
+decaf_448_point_double_scalarmul T
+decaf_448_point_dual_scalarmul T
+decaf_448_point_encode T
+decaf_448_point_eq T
+decaf_448_point_from_hash_nonuniform T
+decaf_448_point_from_hash_uniform T
+decaf_448_point_identity R 256
+decaf_448_point_mul_by_ratio_and_encode_like_eddsa T
+decaf_448_point_mul_by_ratio_and_encode_like_x448 T
+decaf_448_point_negate T
+decaf_448_point_scalarmul T
+decaf_448_point_sub T
+decaf_448_point_valid T
+decaf_448_precompute T
+decaf_448_precomputed_base D 8
+decaf_448_precomputed_destroy T
+decaf_448_precomputed_scalarmul T
+decaf_448_scalar_add T
+decaf_448_scalar_cond_sel T
+decaf_448_scalar_decode T
+decaf_448_scalar_decode_long T
+decaf_448_scalar_destroy T
+decaf_448_scalar_encode T
+decaf_448_scalar_eq T
+decaf_448_scalar_halve T
+decaf_448_scalar_invert T
+decaf_448_scalar_mul T
+decaf_448_scalar_one R 56
+decaf_448_scalar_set_unsigned T
+decaf_448_scalar_sub T
+decaf_448_scalar_zero R 56
+decaf_448_sizeof_precomputed_s R 8
+decaf_bzero T
+decaf_ed25519_convert_private_key_to_x25519 T
+decaf_ed25519_convert_public_key_to_x25519 T
+decaf_ed25519_derive_keypair T
+decaf_ed25519_derive_public_key T
+decaf_ed25519_keypair_destroy T
+decaf_ed25519_keypair_extract_private_key T
+decaf_ed25519_keypair_extract_public_key T
+decaf_ed25519_keypair_sign T
+decaf_ed25519_keypair_sign_prehash T
+decaf_ed25519_prehash_init T
+decaf_ed25519_sign T
+decaf_ed25519_sign_prehash T
+decaf_ed25519_verify T
+decaf_ed25519_verify_prehash T
+decaf_ed448_convert_private_key_to_x448 T
+decaf_ed448_convert_public_key_to_x448 T
+decaf_ed448_derive_keypair T
+decaf_ed448_derive_public_key T
+decaf_ed448_keypair_destroy T
+decaf_ed448_keypair_extract_private_key T
+decaf_ed448_keypair_extract_public_key T
+decaf_ed448_keypair_sign T
+decaf_ed448_keypair_sign_prehash T
+decaf_ed448_prehash_init T
+decaf_ed448_sign T
+decaf_ed448_sign_prehash T
+decaf_ed448_verify T
+decaf_ed448_verify_prehash T
+decaf_memeq T
+decaf_sha3_default_output_bytes T
+decaf_sha3_destroy T
+decaf_sha3_final T
+decaf_sha3_hash T
+decaf_sha3_init T
+decaf_sha3_max_output_bytes T
+decaf_sha3_output T
+decaf_sha3_reset T
+decaf_sha3_update T
+decaf_sha512_final T
+decaf_sha512_init T
+decaf_sha512_update T
+decaf_spongerng_init_from_buffer T
+decaf_spongerng_init_from_dev_urandom T
+decaf_spongerng_init_from_file T
+decaf_spongerng_next T
+decaf_spongerng_stir T
+decaf_x25519 T
+decaf_x25519_base_point R 32
+decaf_x25519_derive_public_key T
+decaf_x25519_generate_key T
+decaf_x448 T
+decaf_x448_base_point R 56
+decaf_x448_derive_public_key T
+decaf_x448_generate_key T
