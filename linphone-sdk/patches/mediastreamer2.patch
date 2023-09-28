@@ -1,0 +1,39 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 33ddefd9..6f00d5b3 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -416,7 +416,7 @@ endif()
+ if(ANDROID AND ENABLE_VIDEO)
+ 	list(APPEND LINK_LIBS EGL GLESv3 android)
+ endif()
+-if(HAVE_DLOPEN)
++if(HAVE_DLOPEN AND NOT GENODE)
+ 	list(APPEND LINK_LIBS dl)
+ endif()
+ if(ALSA_FOUND)
+diff --git a/src/base/msticker.c b/src/base/msticker.c
+index d1f9cc79..9ca2a585 100644
+--- a/src/base/msticker.c
++++ b/src/base/msticker.c
+@@ -353,7 +353,7 @@ static int set_high_prio(MSTicker *obj) {
+ #else
+ 		ms_warning("SetThreadPriority() is not implemented. %s priority left to normal.", obj->name);
+ #endif
+-#else
++#elif !defined(__GENODE__)
+ 		struct sched_param param;
+ 		int policy = SCHED_RR;
+ 		int result = 0;
+diff --git a/src/utils/dsptools.c b/src/utils/dsptools.c
+index 456508b0..87a29975 100644
+--- a/src/utils/dsptools.c
++++ b/src/utils/dsptools.c
+@@ -61,6 +61,8 @@
+ 
+ #ifdef HAVE_ALLOCA_H
+ #include <alloca.h>
++#elif __GENODE__
++#include <stdlib.h>
+ #else
+ #if !defined(__APPLE__)
+ #include <malloc.h>

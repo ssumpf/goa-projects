@@ -1,0 +1,13 @@
+diff --git a/webrtc/base/checks.cc b/webrtc/base/checks.cc
+index efd5959b4..cfa526615 100644
+--- a/webrtc/base/checks.cc
++++ b/webrtc/base/checks.cc
+@@ -16,7 +16,7 @@
+ #include <cstdio>
+ #include <cstdlib>
+ 
+-#if defined(__GLIBCXX__) && !defined(__UCLIBC__) && !defined(ANDROID)
++#if defined(__GLIBCXX__) && !defined(__UCLIBC__) && !defined(ANDROID) && !defined(__GENODE__)
+ # define USE_EXECINFO
+ #endif
+ 

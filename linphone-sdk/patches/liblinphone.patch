@@ -1,0 +1,130 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index b55d06bf5..3f1e9518f 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -101,7 +101,9 @@ include(CheckCXXCompilerFlag)
+ 
+ check_symbol_exists(getifaddrs "sys/types.h;ifaddrs.h" HAVE_GETIFADDRS)
+ 
+-check_library_exists("dl" "dlopen" "" HAVE_DLOPEN)
++if (NOT GENODE)
++	check_library_exists("dl" "dlopen" "" HAVE_DLOPEN)
++endif()
+ 
+ if(NOT CMAKE_INSTALL_RPATH AND CMAKE_INSTALL_PREFIX)
+ 	set(CMAKE_INSTALL_RPATH ${CMAKE_INSTALL_FULL_LIBDIR})
+@@ -458,4 +460,3 @@ endif()
+ if(ENABLE_EXAMPLE_PLUGIN)
+ 	add_subdirectory(plugins/example)
+ endif()
+-
+diff --git a/console/CMakeLists.txt b/console/CMakeLists.txt
+index c086bc17c..c81dddd72 100644
+--- a/console/CMakeLists.txt
++++ b/console/CMakeLists.txt
+@@ -57,6 +57,8 @@ add_executable(linphonecsh ${LINPHONECSH_SOURCE_FILES})
+ target_link_libraries(linphonecsh PRIVATE ${LINPHONE_LIBS_FOR_TOOLS} ${Ortp_TARGET} ${BCToolbox_TARGET})
+ set_target_properties(linphonecsh PROPERTIES LINKER_LANGUAGE CXX)
+ 
++#message(FATAL_ERROR "INSTALL: ${LINPHONE_LIBS_FOR_TOOLS}")
++
+ set(INSTALL_TARGETS linphonec linphonecsh)
+ if(WIN32)
+ 	list(APPEND INSTALL_TARGETS linphoned)
+diff --git a/coreapi/linphonecore.c b/coreapi/linphonecore.c
+index 753b8c980..d984dd2d3 100644
+--- a/coreapi/linphonecore.c
++++ b/coreapi/linphonecore.c
+@@ -851,7 +851,7 @@ static void _close_log_collection_file(void) {
+ 	}
+ }
+ 
+-#if (!__ANDROID__ && !__APPLE__) || (__ANDROID__ && __ANDROID_API__ < 21)
++#if (!__ANDROID__ && !__APPLE__ && !__GENODE__) || (__ANDROID__ && __ANDROID_API__ < 21)
+ static const char *getprogname() {
+ #if defined(__GLIBC__)
+ 	return program_invocation_short_name;
+diff --git a/coreapi/presence.c b/coreapi/presence.c
+index a1bcf844f..043437d61 100644
+--- a/coreapi/presence.c
++++ b/coreapi/presence.c
+@@ -217,6 +217,9 @@ static time_t parse_timestamp(const char *timestamp) {
+ 	}
+ #if defined(LINPHONE_WINDOWS_UNIVERSAL) || defined(LINPHONE_MSC_VER_GREATER_19)
+ 	_get_timezone(&adjust_timezone);
++#elif defined(__GENODE__)
++	/* Genode uses UTC only */
++	adjust_timezone = 0;
+ #else
+ 	adjust_timezone = timezone;
+ #endif
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index 21af77fa4..02cb005e1 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -43,7 +43,7 @@ if(LibXml2_FOUND)
+ 	list(APPEND PUBLIC_LINK_LIBS ${LibXml2_TARGET})
+ endif()
+ 
+-if(HAVE_DLOPEN)
++if(HAVE_DLOPEN AND NOT GENODE)
+ 	list(APPEND LINK_LIBS dl)
+ endif()
+ 
+diff --git a/src/core/paths/paths-linux.cpp b/src/core/paths/paths-linux.cpp
+index 5db3c6209..f622947a8 100644
+--- a/src/core/paths/paths-linux.cpp
++++ b/src/core/paths/paths-linux.cpp
+@@ -30,6 +30,17 @@ using namespace std;
+ 
+ LINPHONE_BEGIN_NAMESPACE
+ 
++#ifdef __GENODE__
++/* on Genode we will have to define HOME */
++static string getBaseDirectory() {
++	static string base;
++	if (base.empty()) {
++		char *dir = getenv("HOME");
++		base = dir;
++	}
++	return base;
++};
++#else
+ static string getBaseDirectory() {
+ 	static string base;
+ 	if (base.empty()) {
+@@ -45,6 +56,7 @@ static string getBaseDirectory() {
+ 	}
+ 	return base;
+ }
++#endif
+ 
+ string SysPaths::getDataPath(void *context) {
+ 	static std::string dataPath;
+diff --git a/src/core/paths/paths.cpp b/src/core/paths/paths.cpp
+index 5ccf53746..e0043527a 100644
+--- a/src/core/paths/paths.cpp
++++ b/src/core/paths/paths.cpp
+@@ -27,7 +27,7 @@
+ #include "paths-android.h"
+ #elif defined(_WIN32)
+ #include "paths-windows.h"
+-#elif defined(__linux__)
++#elif defined(__linux__) || defined(__GENODE__)
+ #include "paths-linux.h"
+ #else
+ #error "Unsupported system."
+diff --git a/src/utils/utils.cpp b/src/utils/utils.cpp
+index 314ca4231..5306f3246 100644
+--- a/src/utils/utils.cpp
++++ b/src/utils/utils.cpp
+@@ -229,6 +229,9 @@ time_t Utils::getTmAsTimeT(const tm &t) {
+ 
+ #if defined(LINPHONE_WINDOWS_UNIVERSAL) || defined(LINPHONE_MSC_VER_GREATER_19)
+ 	_get_timezone(&adjustTimezone);
++#elif defined(__GENODE__)
++	/* Genode uses UTC only */
++	adjustTimezone = 0;
+ #else
+ 	adjustTimezone = timezone;
+ #endif

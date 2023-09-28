@@ -1,0 +1,13 @@
+diff --git a/src/netsim.c b/src/netsim.c
+index faa65bcd..075ffde4 100644
+--- a/src/netsim.c
++++ b/src/netsim.c
+@@ -78,7 +78,7 @@ static const char *sched_policy_to_string(int policy) {
+ #endif
+ 
+ static void set_high_prio(void) {
+-#ifndef _WIN32
++#if !defined(_WIN32) && !defined(__GENODE__)
+ 	const char *sched_pref = getenv("ORTP_SIMULATOR_SCHED_POLICY");
+ 	int policy = SCHED_OTHER;
+ 	struct sched_param param;

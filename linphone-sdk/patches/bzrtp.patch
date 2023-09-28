@@ -1,0 +1,13 @@
+diff --git a/src/zidCache.c b/src/zidCache.c
+index 96274da..068328a 100644
+--- a/src/zidCache.c
++++ b/src/zidCache.c
+@@ -29,6 +29,8 @@
+ 
+ #ifdef _WIN32
+ #include <malloc.h>
++#elif __GENODE__
++#include <stdlib.h>
+ #else
+ #include <alloca.h>
+ #endif

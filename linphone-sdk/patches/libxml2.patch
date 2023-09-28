@@ -1,0 +1,13 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index c76af24b..9db97161 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -349,6 +349,8 @@ if(MSVC)
+ 	if(MSVC_VERSION LESS "1900")	# VS 14.0
+ 		target_compile_definitions(xml2 PRIVATE "snprintf=_snprintf")
+ 	endif()
++elseif(GENODE)
++	target_link_libraries(xml2)
+ else()
+ 	target_link_libraries(xml2 m)
+ 	if(NOT APPLE)
