@@ -1,0 +1,51 @@
+<runtime ram="512M" caps="1000" binary="init" config="console.config">
+	<requires>
+		<gui/>
+		<timer/>
+		<audio_in/>
+		<audio_out/>
+		<nic/>
+	</requires>
+	<content>
+
+		<!-- linphonec dependencies -->
+		<rom label="linphonec"/>
+		<rom label="libbctoolbox.lib.so"/>
+		<rom label="libbelle-sip.lib.so"/>
+		<rom label="libbelr.lib.so"/>
+		<rom label="libz.lib.so"/>
+		<rom label="libbzrtp.lib.so"/>
+		<rom label="libc.lib.so"/>
+		<rom label="libdecaf.lib.so"/>
+		<rom label="libiconv.lib.so"/>
+		<rom label="liblinphone.lib.so"/>
+		<rom label="libmediastreamer2.lib.so"/>
+		<rom label="libm.lib.so"/>
+		<rom label="libmbedcrypto.lib.so"/>
+		<rom label="libmbedtls.lib.so"/>
+		<rom label="libmbedx509.lib.so"/>
+		<rom label="libopus.lib.so"/>
+		<rom label="libortp.lib.so"/>
+		<rom label="libsqlite3.lib.so"/>
+		<rom label="libsrtp2.lib.so"/>
+		<rom label="lxip.lib.so"/>
+		<rom label="libxml2.lib.so"/>
+		<rom label="posix.lib.so"/>
+		<rom label="stdcxx.lib.so"/>
+		<rom label="vfs.lib.so"/>
+		<rom label="vfs_jitterentropy.lib.so"/>
+		<rom label="vfs_lxip.lib.so"/>
+		<rom label="vfs_oss.lib.so"/>
+		<rom label="vfs_pipe.lib.so"/>
+		<rom label="console.config"/>
+
+		<!-- Terminal -->
+		<rom label="terminal"/>
+		<rom label="terminal.config"/>
+		<rom label="vfs_ttf.lib.so"/>
+		<rom label="VeraMono.ttf"/>
+
+		<rom label="init"/>
+
+	</content>
+</runtime>
