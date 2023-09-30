@@ -5,15 +5,33 @@
 		<audio_out/>
 		<nic/>
 	</requires>
-	<config>
-		<libc stdin="/dev/null" stdout="/dev/log" stderr="/dev/log" rtc="/dev/rtc" socket="/socket" pipe="/pipe"/>
+	<config ld_verbose="true">
+		<env key="HOME" value="/"/>
+		<libc stdin="/dev/null" stdout="/dev/log" stderr="/dev/log" rtc="/dev/rtc" socket="/socket" pipe="/pipe" rng="dev/random" />
 		<vfs>
 			<dir name="dev">
 					<log/><null/><inline name="rtc">2000-01-01 00:00</inline>
+					<jitterentropy name="random"/>
 					<oss name="dsp"/>
 			</dir>
 			<dir name="pipe"> <pipe/> </dir>
 			<dir name="socket"> <lxip dhcp="yes"/> </dir>
+			<dir name=".local">
+				<dir name="share">
+					<dir name="linphone">
+						<ram/>
+					</dir>
+				</dir>
+			</dir>
+			<dir name=".config">
+				<dir name="linphone">
+				</dir>
+			</dir>
+			<inline name=".linphonerc">[sip]
+use_ipv6=0
+ipv6_migration_done=1
+
+</inline>
 		</vfs>
 	</config>
 	<content>
@@ -41,6 +59,7 @@
 		<rom label="posix.lib.so"/>
 		<rom label="stdcxx.lib.so"/>
 		<rom label="vfs.lib.so"/>
+		<rom label="vfs_jitterentropy.lib.so"/>
 		<rom label="vfs_lxip.lib.so"/>
 		<rom label="vfs_oss.lib.so"/>
 		<rom label="vfs_pipe.lib.so"/>
