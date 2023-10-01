@@ -1,0 +1,30 @@
+diff --git a/console/linphonec.c b/console/linphonec.c
+index 4be58e16c..fa7fa765d 100644
+--- a/console/linphonec.c
++++ b/console/linphonec.c
+@@ -371,10 +371,22 @@ static bool_t have_prompt = FALSE;
+ static void *prompt_reader_thread(BCTBX_UNUSED(void *arg)) {
+ 	char *ret;
+ 	char tmp[PROMPT_MAX_LEN];
+-	while ((ret = fgets(tmp, sizeof(tmp), stdin)) != NULL) {
++	int pos = 0; int c;
++
++	/* DEBUG GENODE: echo char to stdout */
++	while ((c = fgetc(stdin)) != EOF) {
+ 		ms_mutex_lock(&prompt_mutex);
+-		strcpy(received_prompt, ret);
+-		have_prompt = TRUE;
++		tmp[pos] = (char)c;
++		pos += 1;
++		if (c == '\n' || pos == PROMPT_MAX_LEN - 1) {
++			tmp[pos] = 0;
++			strcpy(received_prompt, &tmp);
++			pos = 0;
++			have_prompt = TRUE;
++		}
++
++		fprintf(stdout, "%c", c);
++		fflush(stdout);
+ 		ms_mutex_unlock(&prompt_mutex);
+ 	}
+ 	return NULL;
