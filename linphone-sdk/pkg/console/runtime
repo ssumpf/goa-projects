@@ -38,6 +38,7 @@
 		<rom label="vfs_oss.lib.so"/>
 		<rom label="vfs_pipe.lib.so"/>
 		<rom label="console.config"/>
+		<rom label="factory.settings"/>
 
 		<!-- Terminal -->
 		<rom label="terminal"/>

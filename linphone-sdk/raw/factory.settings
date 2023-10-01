@@ -1,0 +1,4 @@
+[sip]
+use_ipv6=0
+ipv6_migration_done=1
+
