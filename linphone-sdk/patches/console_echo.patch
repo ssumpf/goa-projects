@@ -1,8 +1,8 @@
 diff --git a/console/linphonec.c b/console/linphonec.c
-index 4be58e16c..fa7fa765d 100644
+index 4be58e16c..4dfa7d692 100644
 --- a/console/linphonec.c
 +++ b/console/linphonec.c
-@@ -371,10 +371,22 @@ static bool_t have_prompt = FALSE;
+@@ -371,10 +371,25 @@ static bool_t have_prompt = FALSE;
  static void *prompt_reader_thread(BCTBX_UNUSED(void *arg)) {
  	char *ret;
  	char tmp[PROMPT_MAX_LEN];
@@ -15,6 +15,9 @@ index 4be58e16c..fa7fa765d 100644
 -		strcpy(received_prompt, ret);
 -		have_prompt = TRUE;
 +		tmp[pos] = (char)c;
++		if (c == '\b' && pos > 0) {
++			pos -= 2;
++		}
 +		pos += 1;
 +		if (c == '\n' || pos == PROMPT_MAX_LEN - 1) {
 +			tmp[pos] = 0;
