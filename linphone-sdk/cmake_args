@@ -23,3 +23,12 @@
 -DENABLE_PULSEAUDIO=NO
 -DHAVE_DLOPEN=YES
 -DUNIX=1
+#
+# Build  as 'Release, RelWithDebInfo, or Debug'
+#
+-DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo
+#
+# Link so names instead of relative paths. This leads to suffixes like
+# 'libxml2.lib.so.2', which need to relabeled.
+#
+-DCMAKE_SHARED_LIBRARY_SONAME_C_FLAG:STRING=-Wl,-soname,
