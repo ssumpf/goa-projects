@@ -30,6 +30,7 @@
 		<rom label="libsrtp2.lib.so.5.3.0"/>
 		<rom label="lxip.lib.so"/>
 		<rom label="libxml2.lib.so.2"/>
+		<rom label="init"/>
 		<rom label="posix.lib.so"/>
 		<rom label="stdcxx.lib.so"/>
 		<rom label="vfs.lib.so"/>

@@ -1,6 +1,7 @@
 ssumpf_test/raw/ttf-bitstream-vera-minimal
 ssumpf_test/src/libc
 ssumpf_test/src/libiconv
+ssumpf_test/src/init
 ssumpf_test/src/posix
 ssumpf_test/src/stdcxx
 ssumpf_test/src/terminal
@@ -10,4 +11,3 @@ ssumpf_test/src/vfs_lxip
 ssumpf_test/src/vfs_oss
 ssumpf_test/src/vfs_pipe
 ssumpf_test/src/vfs_ttf
-
