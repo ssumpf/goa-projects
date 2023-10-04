@@ -39,6 +39,7 @@
 		<rom label="vfs_pipe.lib.so"/>
 		<rom label="console.config"/>
 		<rom label="factory.settings"/>
+		<rom label="share-belr.tar"/>
 
 		<!-- Terminal -->
 		<rom label="terminal"/>
