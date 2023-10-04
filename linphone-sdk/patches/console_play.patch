@@ -1,0 +1,15 @@
+diff --git a/console/commands.c b/console/commands.c
+index 1f41a8ace..e2372834b 100644
+--- a/console/commands.c
++++ b/console/commands.c
+@@ -940,7 +940,9 @@ static int lpc_cmd_friend(LinphoneCore *lc, char *args) {
+ static int lpc_cmd_play(LinphoneCore *lc, char *args) {
+ 	if (args) args = lpc_strip_blanks(args);
+ 	if (!args || !*args) return 0;
+-	linphone_core_set_play_file(lc, args);
++	//linphone_core_set_play_file(lc, args);
++	//GENODE: Debug play file locally
++	linphone_core_play_local(lc, args);
+ 	return 1;
+ }
+ 
