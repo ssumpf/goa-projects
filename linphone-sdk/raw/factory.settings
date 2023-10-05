@@ -1,4 +1,26 @@
 [sip]
 use_ipv6=0
 ipv6_migration_done=1
+default_proxy=0
 
+[proxy_0]
+reg_proxy=sip:10.0.0.8
+reg_identity=sip:pinephone@10.0.0.8
+quality_reporting_enabled=0
+quality_reporting_interval=0
+reg_expires=600
+reg_sendregister=1
+publish=0
+avpf=-1
+avpf_rr_interval=1
+dial_escape_plus=0
+use_dial_prefix_for_calls_and_chats=1
+privacy=32768
+push_notification_allowed=0
+remote_push_notification_allowed=0
+force_register_on_push=0
+cpim_in_basic_chat_rooms_enabled=0
+idkey=proxy_config_9IYiulYdjJjxfb8
+publish_expires=-1
+rtp_bundle=0
+rtp_bundle_assumption=0
