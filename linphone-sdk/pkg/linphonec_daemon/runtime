@@ -1,0 +1,51 @@
+<runtime ram="512M" caps="1000" binary="init" config="daemon.config">
+	<requires>
+		<timer/>
+		<audio_in/>
+		<audio_out/>
+		<nic/>
+		<terminal/>
+	</requires>
+	<content>
+
+		<!-- linphonec dependencies -->
+		<rom label="linphonec"/>
+		<rom label="libbctoolbox.lib.so.1"/>
+		<rom label="libbelle-sip.lib.so.1"/>
+		<rom label="libbelr.lib.so.1"/>
+		<rom label="libz.lib.so.1.2.13"/>
+		<rom label="libbzrtp.lib.so.0"/>
+		<rom label="libc.lib.so"/>
+		<rom label="libdecaf.lib.so.0"/>
+		<rom label="libiconv.lib.so"/>
+		<rom label="liblinphone.lib.so.10"/>
+		<rom label="libmediastreamer2.lib.so"/>
+		<rom label="libm.lib.so"/>
+		<rom label="libmbedcrypto.lib.so.3.4.0"/>
+		<rom label="libmbedtls.lib.so.3.4.0"/>
+		<rom label="libmbedx509.lib.so.3.4.0"/>
+		<rom label="libopus.lib.so.0.8.0"/>
+		<rom label="libortp.lib.so.15"/>
+		<rom label="libsqlite3.lib.so"/>
+		<rom label="libsrtp2.lib.so.5.3.0"/>
+		<rom label="lxip.lib.so"/>
+		<rom label="libxml2.lib.so.2"/>
+		<rom label="init"/>
+		<rom label="posix.lib.so"/>
+		<rom label="stdcxx.lib.so"/>
+		<rom label="vfs.lib.so"/>
+		<rom label="vfs_jitterentropy.lib.so"/>
+		<rom label="vfs_lxip.lib.so"/>
+		<rom label="vfs_lwip.lib.so"/>
+		<rom label="vfs_oss.lib.so"/>
+		<rom label="vfs_pipe.lib.so"/>
+		<rom label="daemon.config"/>
+		<rom label="factory.settings"/>
+		<rom label="share-belr.tar"/>
+
+		<!-- Testing -->
+		<rom label="hello44100.wav"/>
+		<rom label="hello8000.wav"/>
+
+	</content>
+</runtime>
