@@ -26,6 +26,8 @@
 		<rom label="libmbedx509.lib.so.3.4.0"/>
 		<rom label="libopus.lib.so.0.8.0"/>
 		<rom label="libortp.lib.so.15"/>
+		<rom label="libspeex.lib.so.6"/>
+		<rom label="libspeexdsp.lib.so.6"/>
 		<rom label="libsqlite3.lib.so"/>
 		<rom label="libsrtp2.lib.so.5.3.0"/>
 		<rom label="lxip.lib.so"/>

@@ -959,7 +959,7 @@ ms_video_presets_manager_register_preset_configuration T
 ms_void_sink_desc D 104
 ms_void_source_desc D 104
 ms_voip_exit T
-ms_voip_filter_descs D 232
+ms_voip_filter_descs D 264
 ms_voip_init T
 ms_volume_dbm0_to_dbov T
 ms_volume_dbov_to_dbm0 T

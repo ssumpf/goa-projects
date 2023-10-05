@@ -11,6 +11,8 @@ install/lib/libmbedx509.lib.so.3.4.0
 install/lib/libmediastreamer2.lib.so
 install/lib/libopus.lib.so.0.8.0
 install/lib/libortp.lib.so.15
+install/lib/libspeex.lib.so.6
+install/lib/libspeexdsp.lib.so.6
 install/lib/libsqlite3.lib.so
 install/lib/libsrtp2.lib.so.5.3.0
 install/lib/libxml2.lib.so.2
