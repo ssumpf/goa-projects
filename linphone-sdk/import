@@ -15,6 +15,7 @@ PATCHES := $(addprefix patches/,bctoolbox.patch \
                                 mbedtls.patch \
                                 mediastreamer2.patch \
                                 ortp.patch \
+                                oss.patch \
                                 webrtc.patch)
 
 PATCH_OPT(patches/bctoolbox.patch)      := -p1 -dsrc/bctoolbox
@@ -24,4 +25,5 @@ PATCH_OPT(patches/libxml2.patch)        := -p1 -dsrc/external/libxml2
 PATCH_OPT(patches/mbedtls.patch)        := -p1 -dsrc/external/mbedtls
 PATCH_OPT(patches/mediastreamer2.patch) := -p1 -dsrc/mediastreamer2
 PATCH_OPT(patches/ortp.patch)           := -p1 -dsrc/ortp
+PATCH_OPT(patches/oss.patch)            := -p1 -dsrc/mediastreamer2
 PATCH_OPT(patches/webrtc.patch)         := -p1 -dsrc/mswebrtc/webrtc
