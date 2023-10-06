@@ -24,3 +24,6 @@ idkey=proxy_config_9IYiulYdjJjxfb8
 publish_expires=-1
 rtp_bundle=0
 rtp_bundle_assumption=0
+
+[rtp]
+audio_rtp_port=7078
