@@ -2,6 +2,11 @@
 use_ipv6=0
 ipv6_migration_done=1
 default_proxy=0
+media_encryption=none
+inc_timeout=30
+in_call_timeout=0
+delayed_timeout=4
+
 
 [proxy_0]
 reg_proxy=sip:10.0.0.8

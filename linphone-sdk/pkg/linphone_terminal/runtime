@@ -5,6 +5,7 @@
 		<audio_in/>
 		<audio_out/>
 		<nic/>
+		<rtc/>
 	</requires>
 	<content>
 
