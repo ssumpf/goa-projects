@@ -48,6 +48,10 @@
 		<!-- CA -->
 		<rom label="rootca.pem"/>
 
+		<!-- ring tones -->
+		<rom label="rinback.wav"/>
+		<rom label="oldphone-mono.wav"/>
+
 		<!-- Terminal -->
 		<rom label="terminal"/>
 		<rom label="terminal.config"/>

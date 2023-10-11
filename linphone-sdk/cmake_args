@@ -22,12 +22,13 @@
 -DENABLE_ALSA=NO
 -DENABLE_PULSEAUDIO=NO
 -DENABLE_RESAMPLE=YES
+-DENABLE_ASSETS=YES
 -DHAVE_DLOPEN=YES
 -DUNIX=1
 #
 # Build  as 'Release, RelWithDebInfo, or Debug'
 #
--DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo
+-DCMAKE_BUILD_TYPE:STRING=Release
 #
 # Link so names instead of relative paths. This leads to suffixes like
 # 'libxml2.lib.so.2', which need to relabeled.

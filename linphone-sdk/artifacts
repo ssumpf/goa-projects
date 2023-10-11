@@ -18,4 +18,6 @@ install/lib/libsrtp2.lib.so.5.3.0
 install/lib/libxml2.lib.so.2
 install/lib/libz.lib.so.1.2.13
 install/share/linphone/rootca.pem
+install/share/sounds/linphone/ringback.wav
+install/share/sounds/linphone/rings/oldphone-mono.wav
 share-belr.tar: install/share/belr

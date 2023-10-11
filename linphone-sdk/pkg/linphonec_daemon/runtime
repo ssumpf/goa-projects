@@ -1,10 +1,11 @@
-<runtime ram="512M" caps="1000" binary="init" config="daemon.config">
+<runtime ram="256M" caps="1000" binary="init" config="daemon.config">
 	<requires>
 		<timer/>
 		<audio_in/>
 		<audio_out/>
 		<nic/>
 		<terminal/>
+		<rtc/>
 	</requires>
 	<content>
 
@@ -44,6 +45,13 @@
 		<rom label="daemon.config"/>
 		<rom label="factory.settings"/>
 		<rom label="share-belr.tar"/>
+
+		<!-- CA -->
+		<rom label="rootca.pem"/>
+
+		<!-- ring tones -->
+		<rom label="rinback.wav"/>
+		<rom label="oldphone-mono.wav"/>
 
 		<!-- Testing -->
 		<rom label="hello44100.wav"/>

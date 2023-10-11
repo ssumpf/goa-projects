@@ -41,3 +41,7 @@ rtp_bundle_assumption=0
 [rtp]
 audio_rtp_port=7078
 audio_jitt_comp=60
+
+[sound]
+remote_ring=/share/ringback.wav
+local_ring=/share/oldphone-mono.wav
