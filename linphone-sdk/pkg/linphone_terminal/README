@@ -1,3 +1,0 @@
-This start 'linphonec' in interactive mode, uses a terminal, and requires
-'console.patch' from patches directory applied to 'src/liblinphone' for terminal
-echo.
