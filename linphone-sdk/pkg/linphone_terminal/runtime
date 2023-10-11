@@ -45,6 +45,9 @@
 		<rom label="factory.settings"/>
 		<rom label="share-belr.tar"/>
 
+		<!-- CA -->
+		<rom label="rootca.pem"/>
+
 		<!-- Terminal -->
 		<rom label="terminal"/>
 		<rom label="terminal.config"/>
