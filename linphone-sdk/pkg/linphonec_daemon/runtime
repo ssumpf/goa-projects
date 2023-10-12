@@ -50,7 +50,7 @@
 		<rom label="rootca.pem"/>
 
 		<!-- ring tones -->
-		<rom label="rinback.wav"/>
+		<rom label="ringback.wav"/>
 		<rom label="oldphone-mono.wav"/>
 
 		<!-- Testing -->
