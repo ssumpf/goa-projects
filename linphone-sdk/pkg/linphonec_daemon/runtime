@@ -6,6 +6,7 @@
 		<nic/>
 		<terminal/>
 		<rtc/>
+		<file_system/>
 	</requires>
 	<content>
 
