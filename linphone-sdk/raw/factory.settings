@@ -17,3 +17,5 @@ audio_jitt_comp=60
 [sound]
 remote_ring=/share/ringback.wav
 local_ring=/share/oldphone-mono.wav
+echocancellation=1
+ec_delay=100
