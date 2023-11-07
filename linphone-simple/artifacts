@@ -1,0 +1,5 @@
+linphone-simple_qml.tar: install/linphone-simple
+linphone-simple-linphone-plugin.tar: plugins/Linphone/install/
+linphone-simple-servicecontrol-plugin.tar: plugins/ServiceControl/install/
+plugins/Linphone/install/qt/qml/Linphone/liblinphoneplugin.lib.so
+plugins/ServiceControl/install/qt/qml/ServiceControl/libservicecontrolplugin.lib.so

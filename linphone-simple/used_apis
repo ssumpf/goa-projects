@@ -1,0 +1,6 @@
+ssumpf_test/api/libc
+ssumpf_test/api/qt5_base
+ssumpf_test/api/qt5_component
+ssumpf_test/api/qt5_declarative
+ssumpf_test/api/so
+ssumpf_test/api/stdcxx
