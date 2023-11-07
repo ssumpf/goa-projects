@@ -1,0 +1,11 @@
+--- a/coreapi/lpconfig.c
++++ b/coreapi/lpconfig.c
+@@ -121,7 +121,7 @@
+ #endif
+ 
+ char *lp_realpath(const char *file, char *name) {
+-#if defined(_WIN32) || defined(__QNX__) || defined(__ANDROID__)
++#if 1//defined(_WIN32) || defined(__QNX__) || defined(__ANDROID__)
+ 	return ms_strdup(file);
+ #else
+ 	char *output = realpath(file, name);
