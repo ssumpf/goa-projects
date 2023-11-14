@@ -11,71 +11,71 @@ URL(linphone-sdk) := https://gitlab.linphone.org/BC/public/linphone-sdk.git
 REV(linphone-sdk) := 5bbd9ec01dfb725a3dfaaab4d8b08fc2cefcc4d7
 DIR(linphone-sdk) := src
 
-URL(bctoolbox) := https://gitlab.linphone.org/BC/public/bctoolbox.git
+URL(bctoolbox) := https://gitlab.linphone.org/BC/public/bctoolbox.git --depth 1
 REV(bctoolbox) := 6a403eed726e29cd86a8e737ef625316d0ba73b1
 DIR(bctoolbox) := src/bctoolbox
 
-URL(belle-sip) := https://gitlab.linphone.org/BC/public/belle-sip.git
+URL(belle-sip) := https://gitlab.linphone.org/BC/public/belle-sip.git --depth 1
 REV(belle-sip) := 6b1c87130649e82ef7971d3737f5c31c7ab6983e
 DIR(belle-sip) := src/belle-sip
 
-URL(belr) := https://gitlab.linphone.org/BC/public/belr.git
+URL(belr) := https://gitlab.linphone.org/BC/public/belr.git --depth 1
 REV(belr) := e28ed5b96dd36cfd233faff23e3cb3688892bb11
 DIR(belr) := src/belr
 
-URL(bzrtp) := https://gitlab.linphone.org/BC/public/bzrtp.git
+URL(bzrtp) := https://gitlab.linphone.org/BC/public/bzrtp.git --depth 1
 REV(bzrtp) := 922bd8a4f14e37c8a7702ecbc4e4d78d360081dd
 DIR(bzrtp) := src/bzrtp
 
-URL(external-decaf) := https://gitlab.linphone.org/BC/public/external/decaf.git
+URL(external-decaf) := https://gitlab.linphone.org/BC/public/external/decaf.git --depth 1
 REV(external-decaf) := 4d7bafff3a69c9d02b8addbb78f301a6a74e59ea
 DIR(external-decaf) := src/external/decaf
 
-URL(external-libxml2) := https://gitlab.linphone.org/BC/public/external/libxml2.git
+URL(external-libxml2) := https://gitlab.linphone.org/BC/public/external/libxml2.git --depth 10
 REV(external-libxml2) := 0c3727603137d62b09648ce20d819f27d35e913e
 DIR(external-libxml2) := src/external/libxml2
 
-URL(external-mbedtls) := https://gitlab.linphone.org/BC/public/external/mbedtls.git
+URL(external-mbedtls) := https://gitlab.linphone.org/BC/public/external/mbedtls.git --depth 1
 REV(external-mbedtls) := 2acc0f26e6e97c82ff9981c1ec32b497d4ea9426
 DIR(external-mbedtls) := src/external/mbedtls
 
-URL(external-opus) := https://gitlab.linphone.org/BC/public/external/opus.git
+URL(external-opus) := https://gitlab.linphone.org/BC/public/external/opus.git --depth 10
 REV(external-opus) := de9442fbf3fe6f97b53ee91070f0aa80fe312ac8
 DIR(external-opus) := src/external/opus
 
-URL(external-speex) := https://gitlab.linphone.org/BC/public/external/speex.git
+URL(external-speex) := https://gitlab.linphone.org/BC/public/external/speex.git --depth 1
 REV(external-speex) := d7a3c1731d5ec1688776a65b4e72ce8d32112c8e
 DIR(external-speex) := src/external/speex
 
-URL(external-sqlite3) := https://gitlab.linphone.org/BC/public/external/sqlite3.git
+URL(external-sqlite3) := https://gitlab.linphone.org/BC/public/external/sqlite3.git --depth 1
 REV(external-sqlite3) := 2ad0736620e82b47ee9ac5810f8e55abb6d46df9
 DIR(external-sqlite3) := src/external/sqlite3
 
-URL(external-srtp) := https://gitlab.linphone.org/BC/public/external/srtp.git
+URL(external-srtp) := https://gitlab.linphone.org/BC/public/external/srtp.git --depth 1
 REV(external-srtp) := c136e9462551add57ad29844822e1f5dece4e4d7
 DIR(external-srtp) := src/external/srtp
 
-URL(external-zlib) := https://gitlab.linphone.org/BC/public/external/zlib.git
+URL(external-zlib) := https://gitlab.linphone.org/BC/public/external/zlib.git --depth 1
 REV(external-zlib) := 3c5c87046a6d94df354e0e0ca7fc3c981fbdf61e
 DIR(external-zlib) := src/external/zlib
 
-URL(liblinphone) := https://gitlab.linphone.org/BC/public/liblinphone.git
+URL(liblinphone) := https://gitlab.linphone.org/BC/public/liblinphone.git --depth 10
 REV(liblinphone) := 46c26da3d4134971f1203dc7e4ddab40ff6af876
 DIR(liblinphone) := src/liblinphone
 
-URL(mediastreamer2) := https://gitlab.linphone.org/BC/public/mediastreamer2.git
+URL(mediastreamer2) := https://gitlab.linphone.org/BC/public/mediastreamer2.git --depth 1
 REV(mediastreamer2) := d1bff7e66998e2175ee7be23a2e778210e7209ff
 DIR(mediastreamer2) := src/mediastreamer2
 
-URL(mswebrtc) := https://gitlab.linphone.org/BC/public/mswebrtc.git
+URL(mswebrtc) := https://gitlab.linphone.org/BC/public/mswebrtc.git --depth 1
 REV(mswebrtc) := 7cd041c884cad5a137556b845496c283c1e1c660
 DIR(mswebrtc) := src/mswebrtc
 
-URL(webrtc) := https://gitlab.linphone.org/BC/public/external/webrtc.git
+URL(webrtc) := https://gitlab.linphone.org/BC/public/external/webrtc.git --depth 1
 REV(webrtc) := 583acd27665cfadef8ab03eb85a768d308bd29dd
 DIR(webrtc) := src/mswebrtc/webrtc
 
-URL(ortp) := https://gitlab.linphone.org/BC/public/ortp.git
+URL(ortp) := https://gitlab.linphone.org/BC/public/ortp.git --depth 1
 REV(ortp) := b82c7f7327090b9b1ee72ebd3532fb4389da208c
 DIR(ortp) := src/ortp
 
