@@ -5,6 +5,7 @@
 		<rom label="mesa_gpu_drv.lib.so"/>
 		<rm/>
 		<gpu/>
+		<timer/>
 	</requires>
 
 	<config>

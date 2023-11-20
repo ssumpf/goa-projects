@@ -1,10 +1,10 @@
-<runtime ram="64M" caps="500" binary="test-qt_quick" config="test-qt_quick.config">
+<runtime ram="72M" caps="500" binary="test-qt_quick" config="test-qt_quick.config">
 
 	<requires>
 		<gui/>
 		<rom label="mesa_gpu_drv.lib.so"/>
-		<rm/>
 		<gpu/>
+		<timer/>
 	</requires>
 
 	<content>
@@ -34,7 +34,6 @@
 		<rom label="libQt5Widgets.lib.so"/>
 		<rom label="libqgenode.lib.so"/>
 		<rom label="libqtquick2plugin.lib.so"/>
-		<rom label="qt5_quickcontrols.lib.so"/>
 		<rom label="qt5_component.lib.so"/>
 
 		<rom label="mesa.lib.so"/>
