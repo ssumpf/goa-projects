@@ -16,4 +16,18 @@ A minimal QML example taken from Ubuntu UI toolkit. It archives the QML code and
 contains a packet recipe that launches the application using the Ubuntu UI
 toolkits launcher.
 
+:linphone-sdk:
 
+A port of the Linphone SDK (https://www.linphone.org/liblinphone-sdk) for
+Genode. It enables the use of basic SIP call support. Build and publish the
+'linphonec_daemon' that build a front end for the stack and communication
+through Genode's Terminal interface using 'termimal_crosslink'
+
+:linphone-simple:
+
+A QML based GUI for the 'linphone-sdk'. It uses the Ubuntu UI toolkit (now
+Lomiri). It is based on https://gitlab.com/ubports-linphone/linphone-simple
+
+:linphone_loading_backdrop:
+
+This is used as a backdrop while loading 'linphone-simple'.
