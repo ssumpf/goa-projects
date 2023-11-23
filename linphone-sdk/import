@@ -7,7 +7,7 @@ DOWNLOADS := linphone-sdk.git bctoolbox.git belle-sip.git belr.git \
              liblinphone.git mediastreamer2.git mswebrtc.git webrtc.git \
              ortp.git
 
-DEPTH := 15
+DEPTH := 30
 
 URL(linphone-sdk) := https://gitlab.linphone.org/BC/public/linphone-sdk.git
 REV(linphone-sdk) := 5bbd9ec01dfb725a3dfaaab4d8b08fc2cefcc4d7
