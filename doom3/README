@@ -1,12 +1,10 @@
 
-
                       ====================
                       Doom3 goa playground
                       ====================
 
-This is the not fully in place
-[https://github.com/ssumpf/goa/tree/doom3 - goa]
-environment for Doom3 that builds
+
+This is the not fully in place goa environment for Doom3 that builds
 [https://github.com/dhewm/dhewm3 - dhewm3] for Genode. It is meant for
 developers.
 
