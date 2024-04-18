@@ -31,3 +31,7 @@ Lomiri). It is based on https://gitlab.com/ubports-linphone/linphone-simple
 :linphone_loading_backdrop:
 
 This is used as a backdrop while loading 'linphone-simple'.
+
+:doom3:
+
+This is a port of https://github.com/dhewm/dhewm3 to Genode. See: doom3/README
