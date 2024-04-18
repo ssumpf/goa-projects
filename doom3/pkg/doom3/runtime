@@ -1,0 +1,53 @@
+<runtime ram="2G" caps="5000" binary="dhewm3">
+	<requires>
+		<gui/>
+		<nic/>
+		<rom label="mesa_gpu_drv.lib.so"/>
+		<file_system label="games"/>
+		<rm/>
+		<gpu/>
+		<play/>
+	</requires>
+
+	<config ld_verbose="yes">
+		<env key="HOME" value="/"/>
+		<env key="MESA_DEBUG" value="silent"/>
+		<libc stdout="/dev/log" stderr="/dev/log" rtc="/dev/rtc" socket="/socket"/>
+		<vfs>
+			<dir name="dev"><inline name="rtc">2024-04-15 00:00</inline>
+				<log/> <gpu/> <oss name="dsp" record_enabled="false"/>
+			</dir>
+			<dir name="socket"> <lxip dhcp="yes"/> </dir>
+			<dir name=".config">
+				<dir name="dhewm3">
+					<fs writable="yes" label="games"/>
+				</dir>
+			</dir>
+		</vfs>
+	</config>
+
+	<content>
+		<!-- game files -->
+		<rom label="dhewm3"/>
+		<rom label="base.lib.so"/>
+
+		<!-- Genode -->
+		<rom label="libc.lib.so"/>
+		<rom label="libm.lib.so"/>
+		<rom label="stdcxx.lib.so"/>
+		<rom label="zlib.lib.so"/>
+		<rom label="sdl2.lib.so"/>
+		<rom label="openal.lib.so"/>
+		<rom label="vfs.lib.so"/>
+		<rom label="vfs_gpu.lib.so"/>
+		<rom label="vfs_lxip.lib.so"/>
+		<rom label="vfs_oss.lib.so"/>
+		<rom label="lxip.lib.so"/>
+		<rom label="egl.lib.so"/>
+		<rom label="mesa.lib.so"/>
+		<rom label="glapi.lib.so"/>
+		<rom label="libiconv.lib.so"/>
+		<rom label="expat.lib.so"/>
+		<rom label="libdrm.lib.so"/>
+	</content>
+</runtime>

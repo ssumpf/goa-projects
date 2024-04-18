@@ -1,0 +1,142 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+new file mode 100644
+index 0000000..cd6c3ed
+--- /dev/null
++++ b/CMakeLists.txt
+@@ -0,0 +1,4 @@
++cmake_minimum_required(VERSION 2.8.12)
++project(dhewm3)
++
++add_subdirectory(neo)
+diff --git a/neo/CMakeLists.txt b/neo/CMakeLists.txt
+index d42190f..afb2a2d 100644
+--- a/neo/CMakeLists.txt
++++ b/neo/CMakeLists.txt
+@@ -1,4 +1,4 @@
+-cmake_minimum_required(VERSION 2.6 FATAL_ERROR)
++cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
+ project(dhewm3)
+ 
+ # TODO
+@@ -29,7 +29,7 @@ endif()
+ 
+ option(LINUX_RELEASE_BINS "Set RPATH to \$ORIGIN/libs/ for Linux binary releases" OFF)
+ 
+-set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/sys/cmake")
++list (APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/sys/cmake")
+ 
+ if(LINUX_RELEASE_BINS)
+ 	message(STATUS "Setting RPATH to \$ORIGIN/libs/ so you can put dependencies in there")
+@@ -240,6 +240,8 @@ endif() # not MSVC
+ if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_C_COMPILER_ID STREQUAL "Clang")
+ 	add_compile_options(-pipe)
+ 	add_compile_options(-Wall)
++	# needed for Genode
++	add_compile_options(-D__unix__)
+ 
+ 	if(NOT CMAKE_CROSSCOMPILING AND ONATIVE)
+ 		add_compile_options(-march=native)
+@@ -267,7 +269,7 @@ if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_C_COMPILER_ID STREQUAL "Clang")
+ 		if(NOT cxx_has_fvisibility)
+ 			message(FATAL_ERROR "Compiler does not support -fvisibility")
+ 		endif()
+-		add_compile_options(-fvisibility=hidden)
++		#add_compile_options(-fvisibility=hidden)
+ 	endif()
+ 
+ 	# TODO fix these warnings
+@@ -400,8 +402,8 @@ set(libdir		"${CMAKE_INSTALL_FULL_LIBDIR}/dhewm3")
+ set(datadir		"${CMAKE_INSTALL_FULL_DATADIR}/dhewm3")
+ 
+ configure_file(
+-	"${CMAKE_SOURCE_DIR}/config.h.in"
+-	"${CMAKE_BINARY_DIR}/config.h"
++	"${PROJECT_SOURCE_DIR}/config.h.in"
++	"${PROJECT_BINARY_DIR}/config.h"
+ )
+ 
+ message(STATUS "Building ${CMAKE_BUILD_TYPE} for ${os}-${cpu}")
+@@ -471,7 +473,7 @@ set(src_renderer
+ 
+ # globs all the headers from ${PATHPREFIX}/ and adds them to ${SRCLIST}
+ function(add_globbed_headers SRCLIST PATHPREFIX)
+-	file(GLOB_RECURSE tmp_hdrs RELATIVE "${CMAKE_SOURCE_DIR}" "${PATHPREFIX}/*.h")
++	file(GLOB_RECURSE tmp_hdrs RELATIVE "${PROJECT_SOURCE_DIR}" "${PATHPREFIX}/*.h")
+ 	set(${SRCLIST} ${tmp_hdrs} ${${SRCLIST}} PARENT_SCOPE)
+ endfunction()
+ 
+@@ -965,8 +967,8 @@ if(AROS)
+ 	)
+ elseif(APPLE)
+ 	set(OSX_RESOURCE_FILES
+-		"${CMAKE_SOURCE_DIR}/sys/osx/Doom3.icns"
+-		"${CMAKE_SOURCE_DIR}/sys/osx/Doom 3.rsrc"
++		"${PROJECT_SOURCE_DIR}/sys/osx/Doom3.icns"
++		"${PROJECT_SOURCE_DIR}/sys/osx/Doom 3.rsrc"
+ 	)
+ 
+ 	set_source_files_properties(${OSX_RESOURCE_FILES} PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
+@@ -1019,7 +1021,7 @@ elseif(WIN32)
+ 	else()
+ 		# adding both .rc files breaks the build, but I think it only contains the icon
+ 		# and doom.rc also contains that (+icons for editor etc, AFAIK), so this is fine
+-		set(src_sys_core ${src_sys_core} "${CMAKE_SOURCE_DIR}/sys/win32/rc/dhewm3.rc" )
++		set(src_sys_core ${src_sys_core} "${PROJECT_SOURCE_DIR}/sys/win32/rc/dhewm3.rc" )
+ 	endif()
+ 
+ else()
+@@ -1038,8 +1040,8 @@ else()
+ 	)
+ endif()
+ 
+-include_directories(${CMAKE_BINARY_DIR})
+-include_directories(${CMAKE_SOURCE_DIR})
++include_directories(${PROJECT_BINARY_DIR})
++include_directories(${PROJECT_SOURCE_DIR})
+ 
+ add_library(idlib STATIC ${src_idlib})
+ if (AROS)
+@@ -1136,7 +1138,7 @@ if(BASE)
+ 	
+ 	set_target_properties(base PROPERTIES PREFIX "")
+ 	set_target_properties(base PROPERTIES COMPILE_DEFINITIONS "GAME_DLL")
+-	target_include_directories(base PRIVATE "${CMAKE_SOURCE_DIR}/game")
++	target_include_directories(base PRIVATE "${PROJECT_SOURCE_DIR}/game")
+ 	set_target_properties(base PROPERTIES LINK_FLAGS "${ldflags}")
+ 	set_target_properties(base PROPERTIES INSTALL_NAME_DIR "@executable_path")
+ 	if (AROS)
+@@ -1164,7 +1166,7 @@ if(D3XP)
+ 	source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} PREFIX neo FILES ${src_d3xp})
+ 	set_target_properties(d3xp PROPERTIES PREFIX "")
+ 	set_target_properties(d3xp PROPERTIES COMPILE_DEFINITIONS "GAME_DLL;_D3XP;CTF")
+-	target_include_directories(d3xp PRIVATE "${CMAKE_SOURCE_DIR}/d3xp")
++	target_include_directories(d3xp PRIVATE "${PROJECT_SOURCE_DIR}/d3xp")
+ 	set_target_properties(d3xp PROPERTIES LINK_FLAGS "${ldflags}")
+ 	set_target_properties(d3xp PROPERTIES INSTALL_NAME_DIR "@executable_path")
+ 	if (AROS)
+diff --git a/neo/sys/posix/posix_main.cpp b/neo/sys/posix/posix_main.cpp
+index 58c878f..3ba8f05 100644
+--- a/neo/sys/posix/posix_main.cpp
++++ b/neo/sys/posix/posix_main.cpp
+@@ -270,7 +270,7 @@ TODO: OSX - use the native API instead? NSModule
+ =================
+ */
+ uintptr_t Sys_DLL_Load( const char *path ) {
+-	void* ret = dlopen( path, RTLD_NOW );
++	void* ret = dlopen( path, RTLD_NOW | RTLD_NODELETE);
+ 	if (ret == NULL) {
+ 		// dlopen() failed - this might be ok (we tried one possible path and the next will work)
+ 		// or it might be worth warning about (the lib existed but still couldn't be loaded,
+@@ -401,10 +401,12 @@ int Sys_GetDriveFreeSpace( const char *path ) {
+ static const int   crashSigs[]     = {  SIGILL,   SIGABRT,   SIGFPE,   SIGSEGV };
+ static const char* crashSigNames[] = { "SIGILL", "SIGABRT", "SIGFPE", "SIGSEGV" };
+ 
++#if 0
+ #if ( defined(__linux__) && defined(__GLIBC__) ) || defined(__FreeBSD__) || defined(__APPLE__)
+   #define D3_HAVE_BACKTRACE
+   #include <execinfo.h>
+ #endif
++#endif
+ 
+ #ifdef D3_HAVE_LIBBACKTRACE
+ // non-ancient versions of GCC and clang include libbacktrace

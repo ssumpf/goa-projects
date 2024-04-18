@@ -1,0 +1,10 @@
+LICENSE   := GPLv3
+VERSION   := master
+DOWNLOADS := doom3.git
+
+URL(doom3) := https://github.com/dhewm/dhewm3.git
+REV(doom3) := 443802b683116c6732731a7d9656c4762a59f2f1
+DIR(doom3) := src
+
+PATCHES := doom3.patch
+PATCH_OPT := -p1 -d src

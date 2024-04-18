@@ -1,0 +1,13 @@
+<depot user>/src/libc
+<depot user>/src/openal
+<depot user>/src/zlib
+<depot user>/src/sdl2
+<depot user>/src/stdcxx
+<depot user>/src/vfs
+<depot user>/src/vfs_lxip
+<depot user>/src/mesa
+<depot user>/src/libiconv
+<depot user>/src/expat
+<depot user>/src/libdrm
+<depot user>/src/vfs_gpu
+<depot user>/src/vfs_oss

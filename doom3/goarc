@@ -1,0 +1,7 @@
+set versions_from_genode_dir <path to genode source repo>
+set depot_dir                [file join $versions_from_genode_dir depot]
+set public_dir               [file join $versions_from_genode_dir public]
+set run_depot_user           <depot user>
+set depot_user               <depot user>
+set warn_strict 0
+set cc_cxx_opt_std           "-std=gnu++17"
