@@ -1,8 +1,8 @@
 <runtime ram="256M" caps="1000" binary="init" config="daemon.config">
 	<requires>
 		<timer/>
-		<audio_in/>
-		<audio_out/>
+		<record/>
+		<play/>
 		<nic/>
 		<terminal/>
 		<rtc/>

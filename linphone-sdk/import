@@ -7,7 +7,9 @@ DOWNLOADS := linphone-sdk.git bctoolbox.git belle-sip.git belr.git \
              liblinphone.git mediastreamer2.git mswebrtc.git webrtc.git \
              ortp.git
 
-DEPTH := 30
+#DOWNLOADS := liblinphone.git
+
+DEPTH := 300
 
 URL(linphone-sdk) := https://gitlab.linphone.org/BC/public/linphone-sdk.git
 REV(linphone-sdk) := 5bbd9ec01dfb725a3dfaaab4d8b08fc2cefcc4d7
@@ -61,7 +63,7 @@ URL(external-zlib) := https://gitlab.linphone.org/BC/public/external/zlib.git --
 REV(external-zlib) := 3c5c87046a6d94df354e0e0ca7fc3c981fbdf61e
 DIR(external-zlib) := src/external/zlib
 
-URL(liblinphone) := https://gitlab.linphone.org/BC/public/liblinphone.git --depth $(DEPTH)
+URL(liblinphone) := https://gitlab.linphone.org/BC/public/liblinphone.git --depth 300
 REV(liblinphone) := 46c26da3d4134971f1203dc7e4ddab40ff6af876
 DIR(liblinphone) := src/liblinphone
 
