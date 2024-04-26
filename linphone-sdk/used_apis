@@ -1,5 +1,5 @@
-ssumpf_test/api/libc
-ssumpf_test/api/posix
-ssumpf_test/api/stdcxx
-ssumpf_test/api/so
-ssumpf_test/api/libiconv
+ssumpf/api/libc
+ssumpf/api/posix
+ssumpf/api/stdcxx
+ssumpf/api/so
+ssumpf/api/libiconv
