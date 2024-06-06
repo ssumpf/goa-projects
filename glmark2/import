@@ -1,0 +1,14 @@
+LICENSE   := GPLv3
+VERSION   := master
+DOWNLOADS := glmark2.git
+
+URL(glmark2) := https://github.com/glmark2/glmark2
+REV(glmark2) := 42e3d8fe3aa88743ef90348138f643f7b04a9237
+DIR(glmark2) := src
+
+PATCHES := $(addprefix patches/,build-options.patch \
+                                dlopen.patch \
+                                egl_lib.patch \
+                                genode-native-support.patch \
+                                glmark2.patch )
+PATCH_OPT := -p1 -d src

@@ -1,0 +1,10 @@
+ssumpf_test/src/mesa
+ssumpf_test/src/libdrm
+ssumpf_test/src/libc
+ssumpf_test/src/vfs
+ssumpf_test/src/vfs_gpu
+ssumpf_test/src/expat
+ssumpf_test/src/jpeg
+ssumpf_test/src/libpng
+ssumpf_test/src/zlib
+ssumpf_test/src/stdcxx

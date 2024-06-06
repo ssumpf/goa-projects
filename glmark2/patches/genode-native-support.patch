@@ -1,0 +1,237 @@
+From 17663717dce8c2ddec11ba76b237ce192c53fb6d Mon Sep 17 00:00:00 2001
+From: Sebastian Sumpf <sebastian.sumpf@genode-labs.com>
+Date: Fri, 7 Jun 2024 20:15:19 +0200
+Subject: [PATCH] genode native support
+
+---
+ src/dummies.c              |  24 +++++++
+ src/native-state-genode.cc |  54 ++++++++++++++++
+ src/native-state-genode.h  | 124 +++++++++++++++++++++++++++++++++++++
+ 3 files changed, 202 insertions(+)
+ create mode 100644 src/dummies.c
+ create mode 100644 src/native-state-genode.cc
+ create mode 100644 src/native-state-genode.h
+
+diff --git a/src/dummies.c b/src/dummies.c
+new file mode 100644
+index 0000000..820554d
+--- /dev/null
++++ b/src/dummies.c
+@@ -0,0 +1,24 @@
++/*
++ * \brief  Dummies to prevent unneeded warnings
++ * \author Josef Soentgen
++ * \date   2022-06-05
++ */
++
++/*
++ * Copyright (C) 2022-2023 Genode Labs GmbH
++ *
++ * This file is part of the Genode OS framework, which is distributed
++ * under the terms of the GNU Affero General Public License version 3.
++ */
++
++#include <sys/time.h>
++#include <sys/resource.h>
++#include <unistd.h>
++
++
++int getrusage(int who, struct rusage *usage)
++{
++	(void)who;
++	(void)usage;
++	return -1;
++}
+diff --git a/src/native-state-genode.cc b/src/native-state-genode.cc
+new file mode 100644
+index 0000000..c98a9af
+--- /dev/null
++++ b/src/native-state-genode.cc
+@@ -0,0 +1,54 @@
++#include <libc/component.h>
++
++#include <libc/args.h>
++#include <stdlib.h>
++
++#include <native-state-genode.h>
++
++Genode::Env *genode_env;
++
++extern char **environ;
++extern "C" int main(int argc, char **argv, char **envp);
++
++NativeStateGenode &NativeStateGenode::native_state(Genode::Env *env)
++{
++	static Genode::Constructible<NativeStateGenode> _native;
++
++	if (_native.constructed())
++		return *_native;
++
++	if (env == nullptr && !_native.constructed()) {
++		Genode::error("NativeStateGenode is not constructed");
++		throw -1;
++	}
++
++	_native.construct(*env);
++
++	return *_native;
++}
++
++
++static void component_construct(Libc::Env &env)
++{
++	int argc    = 0;
++	char **argv = nullptr;
++	char **envp = nullptr;
++
++	populate_args_and_env(env, argc, argv, envp);
++
++	environ = envp;
++
++	/* construct */
++	NativeStateGenode::native_state(&env);
++
++	exit(main(argc, argv, envp));
++}
++
++
++void Libc::Component::construct(Libc::Env &env)
++{
++	genode_env = &env;
++
++	Libc::with_libc([&] () { component_construct(env); });
++}
++
+diff --git a/src/native-state-genode.h b/src/native-state-genode.h
+new file mode 100644
+index 0000000..3cc049d
+--- /dev/null
++++ b/src/native-state-genode.h
+@@ -0,0 +1,124 @@
++#ifndef _NATIVE_STATE_GENODE_H_
++#define _NATIVE_STATE_GENODE_H_
++
++#include <native-state.h>
++#include <base/attached_dataspace.h>
++#include <base/env.h>
++#include <base/log.h>
++#include <gui_session/connection.h>
++
++#include <EGL/eglplatform.h>
++
++class NativeStateGenode : public NativeState
++{
++	private:
++
++		Genode::Env &_env;
++
++		struct Window : Genode_egl_window
++		{
++			using View_handle = Gui::Session::View_handle;
++			using Command = Gui::Session::Command;
++
++			Genode::Env      &env;
++			Framebuffer::Mode mode;
++			Gui::Connection   gui { env };
++			Genode::Constructible<Genode::Attached_dataspace> ds { };
++			View_handle       view { };
++
++			Window(Genode::Env &env, int w, int h)
++			:
++				env(env), mode { .area = Gui::Area(w, h) }
++			{
++				width  = w;
++				height = h;
++				type   = WINDOW;
++
++				gui.buffer(mode, false);
++				view = gui.create_view();
++				mode_change();
++
++				gui.enqueue<Command::Title>(view, "glMark2");
++				gui.enqueue<Command::To_front>(view, View_handle());
++				gui.execute();
++			}
++
++			void refresh()
++			{
++				gui.framebuffer()->refresh(0, 0, mode.area.w, mode.area.h);
++			}
++
++			void mode_change()
++			{
++				//mode = gui.mode();
++				//gui.buffer(mode, false);
++
++				if (ds.constructed())
++					ds.destruct();
++
++				ds.construct(env.rm(), gui.framebuffer()->dataspace());
++
++				addr = ds->local_addr<unsigned char>();
++
++				Gui::Rect rect { Gui::Point { 0, 0 }, mode.area };
++				gui.enqueue<Command::Geometry>(view, rect);
++				gui.execute();
++			}
++		};
++
++		Genode::Constructible<Window> _win { };
++
++	public:
++
++		NativeStateGenode(Genode::Env &env)
++		:
++		  _env(env) { }
++
++		bool init_display() override
++		{
++			return true;
++		}
++
++		void* display() override
++		{
++			return nullptr;
++		}
++
++		bool create_window(WindowProperties const& properties) override
++		{
++			if (_win.constructed()) return true;
++
++			_win.construct(_env, properties.width, properties.height);
++			return true;
++		}
++
++		void* window(WindowProperties& properties) override
++		{
++			if (!_win.constructed()) return nullptr;
++
++			properties.width  = _win->width;
++			properties.height = _win->height;
++
++			return &*_win;
++		}
++
++		void visible(bool v) override
++		{
++		}
++
++		bool should_quit() override
++		{
++			return false;
++		}
++
++		void flip() override
++		{
++			if (!_win.constructed()) return;
++
++			_win->refresh();
++		}
++
++		static NativeStateGenode &native_state(Genode::Env *env = 0);
++};
++
++#endif /* _NATIVE_STATE_GENODE_H_ */
+-- 
+2.45.2
+

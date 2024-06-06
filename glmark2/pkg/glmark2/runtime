@@ -1,0 +1,43 @@
+<runtime ram="160M" caps="500" binary="glmark2">
+
+	<requires>
+		<gui/>
+		<gpu/>
+		<timer/>
+		<rom label="mesa_gpu.lib.so"/>
+	</requires>
+
+	<config ld_verbose="yes">
+		<vfs>
+			<dir name="dev">
+				<log/> <gpu/>
+			</dir>
+			<tar name="glmark2_assets.tar"/>
+		</vfs>
+		<libc stdout="/dev/log" stderr="/dev/log"/>
+		<arg value="glmark2"/>
+		<!-- <arg value="\-\-debug"/> -->
+		<arg value="-b"/>
+		<arg value=":duration=4.0"/>
+	</config>
+
+	<content>
+		<rom label="egl.lib.so"/>
+		<rom label="expat.lib.so"/>
+		<rom label="glapi.lib.so"/>
+		<rom label="glmark2"/>
+		<rom label="glmark2_assets.tar"/>
+		<rom label="jpeg.lib.so"/>
+		<rom label="ld.lib.so"/>
+		<rom label="libc.lib.so"/>
+		<rom label="libdrm.lib.so"/>
+		<rom label="libm.lib.so"/>
+		<rom label="libpng.lib.so"/>
+		<rom label="mesa.lib.so"/>
+		<rom label="stdcxx.lib.so"/>
+		<rom label="vfs.lib.so"/>
+		<rom label="vfs_gpu.lib.so"/>
+		<rom label="zlib.lib.so"/>
+	</content>
+
+</runtime>

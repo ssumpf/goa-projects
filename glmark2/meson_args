@@ -1,0 +1,2 @@
+-Dflavors=genode-glesv2
+-Ddata-path=/glmark2

@@ -1,0 +1,60 @@
+diff --git a/meson.build b/meson.build
+index abc92a1..afbd5ac 100644
+--- a/meson.build
++++ b/meson.build
+@@ -23,7 +23,7 @@ if extras_path != ''
+ endif
+ 
+ m_dep = cpp.find_library('m', required : false)
+-dl_dep = cpp.find_library('dl')
++dl_dep = cpp.find_library('dl', required: false)
+ libjpeg_dep = dependency('libjpeg')
+ libpng_dep = dependency('libpng')
+ 
+@@ -36,9 +36,10 @@ endif
+ flavors_str = ', '.join(flavors)
+ need_x11 = flavors_str.contains('x11-')
+ need_drm = flavors_str.contains('drm-')
++need_genode = flavors_str.contains('genode-')
+ need_gbm = flavors_str.contains('gbm-')
+ need_wayland = flavors_str.contains('wayland-')
+-need_gl = flavors_str.contains('-gl')
++need_gl = flavors_str.contains('-gl-') or flavors_str.endswith('-gl')
+ need_glesv2 = flavors_str.contains('-glesv2')
+ need_egl = need_drm or need_wayland or need_glesv2 or flavors_str.contains('-egl')
+ need_glx = flavors.contains('x11-gl')
+diff --git a/meson_options.txt b/meson_options.txt
+index 1a7ba8f..8f0a343 100644
+--- a/meson_options.txt
++++ b/meson_options.txt
+@@ -4,6 +4,7 @@ option('flavors', type : 'array',
+            'drm-glesv2',
+            'gbm-gl',
+            'gbm-glesv2',
++           'genode-glesv2',
+            'wayland-gl',
+            'wayland-glesv2',
+            'x11-gl',
+diff --git a/src/meson.build b/src/meson.build
+index bbb08b7..6dc1a5d 100644
+--- a/src/meson.build
++++ b/src/meson.build
+@@ -249,10 +249,18 @@ else
+     wsi_glx_dep = declare_dependency()
+ endif
+ 
++if need_genode
++    native_genode_dep = declare_dependency(
++       sources: ['native-state-genode.cc', 'dummies.c'],
++       compile_args: ['-DGLMARK2_USE_GENODE']
++       )
++endif
++
+ # Flavor info : [ binary, native, gl, wsi ]
+ flavor_info = {
+   'drm-gl' : ['glmark2-drm', native_drm_dep, gl_gl_dep, wsi_egl_dep],
+   'drm-glesv2' : ['glmark2-es2-drm', native_drm_dep, gl_glesv2_dep, wsi_egl_dep],
++  'genode-glesv2' : ['glmark2', native_genode_dep, gl_glesv2_dep, wsi_egl_dep],
+   'gbm-gl' : ['glmark2-gbm', native_gbm_dep, gl_gl_dep, wsi_egl_dep],
+   'gbm-glesv2' : ['glmark2-es2-gbm', native_gbm_dep, gl_glesv2_dep, wsi_egl_dep],
+   'wayland-gl' : ['glmark2-wayland', native_wayland_dep, gl_gl_dep, wsi_egl_dep],

@@ -1,0 +1,38 @@
+
+                                  =======
+                                  glMark2
+                                  =======
+
+
+[https://github.com/glmark2/glmark2 - glMark2] is an OpenGL 2.0 and ES 2.0
+benchmark with Genode patches applied. It is the same version as found in the
+Genode [https://github.com/genodelabs/genode-world - World] repository, but uses
+glMark2' native build system which is Meson.
+
+This project is currently used for testing Goa's Meson support and will not work
+with the current Genode/Goa release (24.04) because some Genode API changes are
+already implemented here.
+
+Building
+--------
+
+# Adjust depot user in _used_apis_ and _pkg/glmark2/archives_.
+
+# Adjust goarc:
+
+* versions_from_genode_dir <path to genode source>
+* depot_user               <depot user>
+
+# build necessary API in Genode (_used_apis_)
+
+# Disable strict warnings in Goa:
+
+  ! goa build --no-warn-strict
+
+  or in goarc:
+
+  ! set warn_strict 0
+
+# export to Genode depot
+
+  ! goa export

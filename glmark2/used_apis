@@ -1,0 +1,12 @@
+ssumpf_test/api/base
+ssumpf_test/api/framebuffer_session
+ssumpf_test/api/input_session
+ssumpf_test/api/jpeg
+ssumpf_test/api/gui_session
+ssumpf_test/api/libc
+ssumpf_test/api/libdrm
+ssumpf_test/api/libpng
+ssumpf_test/api/os
+ssumpf_test/api/mesa
+ssumpf_test/api/so
+ssumpf_test/api/stdcxx
