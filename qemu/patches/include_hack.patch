@@ -1,0 +1,8 @@
+diff --git a/roms/edk2/EmulatorPkg/Unix/Host/X11IncludeHack b/roms/edk2/EmulatorPkg/Unix/Host/X11IncludeHack
+deleted file mode 120000
+index 2995a4d..0000000
+--- a/roms/edk2/EmulatorPkg/Unix/Host/X11IncludeHack
++++ /dev/null
+@@ -1 +0,0 @@
+-dummy
+\ No newline at end of file

@@ -1,0 +1,13 @@
+LICENSE   := GPLv2
+VERSION   := 9.0.1
+DOWNLOADS := qemu.archive
+
+BASE_URL  := https://download.qemu.org/qemu
+URL(qemu) := $(BASE_URL)-$(VERSION).tar.xz
+SHA(qemu) := d0f4db0fbd151c0cf16f84aeb2a500f6e95009732546f44dafab8d2049bbb805
+DIR(qemu) := src
+
+PATCHES := $(addprefix patches/,build.patch \
+                                include_hack.patch)
+PATCH_OPT := -p1 -d src
+

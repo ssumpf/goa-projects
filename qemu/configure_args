@@ -1,0 +1,4 @@
+--target-list=arm-softmmu
+--without-default-features
+--disable-werror
+--disable-pie
