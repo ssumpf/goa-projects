@@ -1,0 +1,11 @@
+--- a/qemu/util/coroutine-ucontext.c
++++ b/qemu/util/coroutine-ucontext.c
+@@ -193,6 +193,8 @@
+      * everything else.
+      */
+ 
++    uc.uc_mcontext.mc_len = sizeof(uc.uc_mcontext);
++
+     if (getcontext(&uc) == -1) {
+         abort();
+     }

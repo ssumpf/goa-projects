@@ -1,0 +1,115 @@
+<runtime ram="2048M" caps="1000" binary="init">
+
+	<requires>
+		<timer/>
+		<rtc/>
+		<file_system writeable="yes" label=""/>
+	</requires>
+
+	<config>
+
+		<default-route> <any-service> <parent/> </any-service> </default-route>
+
+		<parent-provides>
+			<service name="PD"/>
+			<service name="CPU"/>
+			<service name="LOG"/>
+			<service name="ROM"/>
+			<service name="File_system"/>
+			<service name="Timer"/>
+			<service name="Rtc"/>
+		</parent-provides>
+
+		<start name="fs_report" caps="100">
+			<resource name="RAM" quantum="2M"/>
+			<provides> <service name="Report"/> </provides>
+
+			<config>
+				<vfs>
+					<fs/>
+
+					<import overwrite="no">
+						<inline name="config.qemu.aarch64"><config ld_verbose="yes">
+			<libc stdout="/dev/log" stderr="/dev/log" pipe="/pipe" rtc="/dev/rtc">
+				<mmap align_log2="24"/>
+				<!--
+				<pthread verbose="yes" placement="single-cpu"/>
+				-->
+			</libc>
+
+			<vfs>
+				<dir name="dev">  <rtc/> <log/> </dir>
+				<dir name="pipe"> <pipe/>       </dir>
+
+				<fs/>
+
+			</vfs>
+
+			<arg value="qemu-system-aarch64"/>
+			<arg value="-M"/>         <arg value="raspi3b"/>
+			<arg value="-m"/>         <arg value="1024"/>
+			<arg value="-nographic"/>
+			<arg value="-serial"/>    <arg value="null"/>
+			<arg value="-serial"/>    <arg value="mon:stdio"/>
+			<arg value="-kernel"/>    <arg value="/image_raspi3b"/>
+		</config>
+
+						</inline>
+					</import>
+					<import overwrite="no">
+						<rom name="efi-virtio.rom"/>
+					</import>
+				</vfs>
+			</config>
+
+			<route>
+				<service name="File_system"> <parent label=""/> </service>
+				<any-service> <parent/> </any-service>
+			</route>
+		</start>
+
+		<start name="fs_rom" caps="100">
+			<resource name="RAM" quantum="2M"/>
+			<provides> <service name="ROM"/> </provides>
+			<config/>
+			<route>
+				<service name="File_system"> <parent label=""/> </service>
+				<any-service> <parent/> </any-service>
+			</route>
+		</start>
+
+		<start name="qemu" caps="10000">
+			<binary name="qemu-system-aarch64"/>
+			<resource name="RAM" quantum="16G"/>
+
+			<route>
+				<service name="ROM" label="config">
+					<child name="fs_rom" label="config.qemu.aarch64"/>
+				</service>
+				<service name="File_system"> <parent label=""/> </service>
+				<any-service> <parent/> </any-service>
+			</route>
+		</start>
+
+	</config>
+
+	<content>
+		<rom label="qemu-system-aarch64"/>
+		<rom label="efi-virtio.rom"/>
+		<rom label="ffi.lib.so"/>
+		<rom label="fs_rom"/>
+		<rom label="fs_report"/>
+		<rom label="glib.lib.so"/>
+		<rom label="init"/>
+		<rom label="libc.lib.so"/>
+		<rom label="libc_ucontext.lib.so"/>
+		<rom label="libiconv.lib.so"/>
+		<rom label="libm.lib.so"/>
+		<rom label="posix.lib.so"/>
+		<rom label="vfs.lib.so"/>
+		<rom label="vfs_pipe.lib.so"/>
+		<rom label="vfs_import.lib.so"/>
+		<rom label="zlib.lib.so"/>
+	</content>
+
+</runtime>

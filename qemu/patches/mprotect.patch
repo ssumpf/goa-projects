@@ -1,0 +1,11 @@
+--- a/qemu/util/osdep.c
++++ b/qemu/util/osdep.c
+@@ -79,6 +79,8 @@
+     }
+     return 0;
+ #else
++    /* no mprotect support on Genode - return success */
++    return 0;
+     if (mprotect(addr, size, prot)) {
+         error_report("%s: mprotect failed: %s", __func__, strerror(errno));
+         return -1;

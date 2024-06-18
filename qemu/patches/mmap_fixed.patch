@@ -1,0 +1,13 @@
+--- a/qemu/util/mmap-alloc.c
++++ b/qemu/util/mmap-alloc.c
+@@ -204,6 +204,10 @@
+         map_sync_flags = MAP_SYNC | MAP_SHARED_VALIDATE;
+     }
+ 
++    /* no MAP_FIXED support in Genode, not required for MAP_ANONYMOUS (fd==-1) */
++    if (flags & MAP_FIXED && fd == -1)
++        return ptr;
++    
+     activated_ptr = mmap(ptr, size, prot, flags | map_sync_flags, fd,
+                          map_offset);
+     if (activated_ptr == MAP_FAILED && map_sync_flags) {

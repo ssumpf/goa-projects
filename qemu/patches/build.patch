@@ -1,0 +1,132 @@
+--- a/qemu/Makefile
++++ b/qemu/Makefile
+@@ -145,9 +145,10 @@ NINJAFLAGS = \
+         $(if $V,-v) \
+         $(if $(MAKE.n), -n) \
+         $(if $(MAKE.k), -k0) \
+-        $(filter-out -j, \
+-          $(or $(filter -l% -j%, $(MAKEFLAGS)), \
+-               $(if $(filter --jobserver-auth=%, $(MAKEFLAGS)),, -j1))) \
++        $(filter-out -l%, \
++          $(filter-out -j, \
++            $(or $(filter -l% -j%, $(MAKEFLAGS)), \
++                 $(if $(filter --jobserver-auth=%, $(MAKEFLAGS)),, -j1)))) \
+         -d keepdepfile
+ ninja-cmd-goals = $(or $(MAKECMDGOALS), all)
+ ninja-cmd-goals += $(foreach g, $(MAKECMDGOALS), $(.ninja-goals.$g))
+@@ -163,6 +164,7 @@ $(ninja-targets): run-ninja
+ # Use "| cat" to give Ninja a more "make-y" output.  Use "+" to bypass the
+ # --output-sync line.
+ run-ninja: config-host.mak
++	echo "$(NINJAFLAGS)"
+ ifneq ($(filter $(ninja-targets), $(ninja-cmd-goals)),)
+ 	+$(if $(MAKE.nq),@:,$(quiet-@)$(NINJA) $(NINJAFLAGS) \
+ 	   $(sort $(filter $(ninja-targets), $(ninja-cmd-goals))) | cat)
+--- a/qemu/chardev/char-pty.c
++++ b/qemu/chardev/char-pty.c
+@@ -215,7 +215,7 @@ static void char_pty_finalize(Object *obj)
+ #elif defined CONFIG_BSD
+ # include <termios.h>
+ # if defined(__FreeBSD__) || defined(__FreeBSD_kernel__) || defined(__DragonFly__)
+-#  include <libutil.h>
++//#  include <libutil.h>
+ # else
+ #  include <util.h>
+ # endif
+--- a/qemu/chardev/meson.build
++++ b/qemu/chardev/meson.build
+@@ -21,7 +21,6 @@ if host_os == 'windows'
+ else
+   chardev_ss.add(files(
+       'char-fd.c',
+-      'char-parallel.c',
+       'char-pty.c',
+     ), util)
+ endif
+--- a/qemu/meson.build
++++ b/qemu/meson.build
+@@ -667,7 +667,7 @@ endif
+ #####################################
+ 
+ libm = cc.find_library('m', required: false)
+-threads = dependency('threads')
++threads = dependency('', required:false)
+ util = cc.find_library('util', required: false)
+ winmm = []
+ socket = []
+@@ -870,18 +870,19 @@ have_xen_pci_passthrough = get_option('xen_pci_passthrough') \
+ # When bumping glib minimum version, please check also whether to increase
+ # the _WIN32_WINNT setting in osdep.h according to the value from glib
+ glib_req_ver = '>=2.56.0'
+-glib_pc = dependency('glib-2.0', version: glib_req_ver, required: true,
+-                    method: 'pkg-config')
++#glib_pc = dependency('glib-2.0', version: glib_req_ver, required: true,
++#                    method: 'pkg-config')
++glib_pc = not_found
+ glib_cflags = []
+-if enable_modules
+-  gmodule = dependency('gmodule-export-2.0', version: glib_req_ver, required: true,
+-                       method: 'pkg-config')
+-elif get_option('plugins')
+-  gmodule = dependency('gmodule-no-export-2.0', version: glib_req_ver, required: true,
+-                       method: 'pkg-config')
+-else
++#if enable_modules
++#  gmodule = dependency('gmodule-export-2.0', version: glib_req_ver, required: true,
++#                       method: 'pkg-config')
++#elif get_option('plugins')
++#  gmodule = dependency('gmodule-no-export-2.0', version: glib_req_ver, required: true,
++#                       method: 'pkg-config')
++#else
+   gmodule = not_found
+-endif
++#endif
+ 
+ # This workaround is required due to a bug in pkg-config file for glib as it
+ # doesn't define GLIB_STATIC_COMPILATION for pkg-config --static
+@@ -985,7 +986,7 @@ if not get_option('pixman').auto() or have_system or have_tools
+                       method: 'pkg-config')
+ endif
+ 
+-zlib = dependency('zlib', required: true)
++zlib = dependency('', required: false)
+ 
+ libaio = not_found
+ if not get_option('linux_aio').auto() or have_block
+--- a/qemu/meson_options.txt
++++ b/qemu/meson_options.txt
+@@ -366,5 +366,5 @@ option('qemu_ga_distro', type: 'string', value: 'Linux',
+ option('qemu_ga_version', type: 'string', value: '',
+        description: 'version number for qemu-ga installer')
+ 
+-option('hexagon_idef_parser', type : 'boolean', value : true,
++option('hexagon_idef_parser', type : 'boolean', value : false,
+        description: 'use idef-parser to automatically generate TCG code for the Hexagon frontend')
+--- a/qemu/tests/meson.build
++++ b/qemu/tests/meson.build
+@@ -83,5 +83,5 @@ endif
+ subdir('plugin')
+ subdir('unit')
+ subdir('qapi-schema')
+-subdir('qtest')
++#subdir('qtest')
+ subdir('migration')
+--- a/qemu/util/oslib-posix.c
++++ b/qemu/util/oslib-posix.c
+@@ -51,7 +51,6 @@
+ #ifdef __FreeBSD__
+ #include <sys/thr.h>
+ #include <sys/user.h>
+-#include <libutil.h>
+ #endif
+ 
+ #ifdef __NetBSD__
+@@ -640,7 +639,7 @@ char *qemu_get_pid_name(pid_t pid)
+     struct kinfo_proc *proc = kinfo_getproc(pid);
+ 
+     if (proc) {
+-        name = g_strdup(proc->ki_comm);
++//        name = g_strdup(proc->ki_comm);
+         free(proc);
+     }
+ #else

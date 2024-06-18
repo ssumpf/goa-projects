@@ -1,0 +1,12 @@
+--- a/qemu/tcg/region.c
++++ b/qemu/tcg/region.c
+@@ -556,6 +556,9 @@
+ {
+     void *buf;
+ 
++    prot |= PROT_EXEC;
++    // printf("%s enforce EXEC for now - fix me XXX\n", __func__);
++
+     buf = mmap(NULL, size, prot, flags, -1, 0);
+     if (buf == MAP_FAILED) {
+         error_setg_errno(errp, errno,

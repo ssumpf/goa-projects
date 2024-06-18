@@ -1,0 +1,6 @@
+qemu/build/qemu-system-arm
+qemu/build/qemu-system-aarch64
+qemu/build/qemu-system-x86_64
+qemu/pc-bios/bios-256k.bin
+qemu/pc-bios/vgabios-stdvga.bin
+qemu/pc-bios/efi-virtio.rom

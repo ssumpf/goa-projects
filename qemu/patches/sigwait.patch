@@ -1,0 +1,25 @@
+--- a/qemu/accel/dummy-cpus.c
++++ b/qemu/accel/dummy-cpus.c
+@@ -46,7 +46,9 @@
+ #ifndef _WIN32
+         do {
+             int sig;
++            printf("%s:%u called\n", __func__, __LINE__);
+             r = sigwait(&waitset, &sig);
++            printf("%s:%u called err=%d sig=%d\n", __func__, __LINE__, r, sig);
+         } while (r == -1 && (errno == EAGAIN || errno == EINTR));
+         if (r == -1) {
+             perror("sigwait");
+--- a/qemu/util/compatfd.c
++++ b/qemu/util/compatfd.c
+@@ -33,7 +33,10 @@
+         int sig;
+         int err;
+ 
++        printf("%s:%u called\n", __func__, __LINE__);
+         err = sigwait(&info->mask, &sig);
++        printf("%s:%u called err=%d sig=%d\n", __func__, __LINE__, err, sig);
++
+         if (err != 0) {
+             if (errno == EINTR) {
+                 continue;

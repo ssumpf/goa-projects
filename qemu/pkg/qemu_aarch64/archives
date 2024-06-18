@@ -1,0 +1,14 @@
+genodelabs/src/posix
+alex-ab/src/libc
+genodelabs/src/vfs
+genodelabs/src/vfs_import
+genodelabs/src/vfs_pipe
+genodelabs/src/stdcxx
+genodelabs/src/libiconv
+genodelabs/src/zlib
+alex-ab/src/glib
+alex-ab/src/ffi
+alex-ab/src/libc_ucontext/24.11
+genodelabs/src/init
+genodelabs/src/fs_rom
+genodelabs/src/fs_report

@@ -1,0 +1,29 @@
+LICENSE   := GPLv2
+VERSION   := 9.0.1
+DOWNLOADS := qemu.archive
+
+BASE_URL  := https://download.qemu.org/qemu
+URL(qemu) := $(BASE_URL)-$(VERSION).tar.xz
+SHA(qemu) := d0f4db0fbd151c0cf16f84aeb2a500f6e95009732546f44dafab8d2049bbb805
+DIR(qemu) := src/qemu
+
+PATCHES := $(addprefix patches/,build.patch \
+                                oslib.patch \
+                                sigwait.patch \
+                                openpty.patch \
+                                ucontext.patch \
+                                mmap_fixed.patch \
+                                mprotect.patch \
+                                tcg_region.patch \
+                                chardev_stdio.patch \
+                                loader.patch \
+                                optionsrom.patch \
+                                makefile.patch)
+PATCH_OPT := -p1 -d src
+
+# XXX overwrite as used by goa install.mk
+_dirs: $(DOWNLOADS) additional_steps
+
+additional_steps:
+	echo "Removing symbolic link X11IncludeHack"
+	rm -f src/qemu/roms/edk2/EmulatorPkg/Unix/Host/X11IncludeHack

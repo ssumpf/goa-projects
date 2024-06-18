@@ -1,0 +1,110 @@
+--- a/qemu/util/oslib-posix.c
++++ b/qemu/util/oslib-posix.c
+@@ -92,15 +92,36 @@
+ static QemuMutex page_mutex;
+ static QemuCond page_cond;
+ 
++/* Genode thread base ABI */
++extern unsigned long _ZN6Genode6Thread23stack_area_virtual_baseEv(void);
++extern unsigned long _ZN6Genode6Thread18stack_virtual_sizeEv(void);
++
+ int qemu_get_thread_id(void)
+ {
+ #if defined(__linux__)
+     return syscall(SYS_gettid);
+ #elif defined(__FreeBSD__)
++#if 1
++    /* on Genode stacks are max 1M - XXX potential to break unnoticed */
++    int thread_ids_base = _ZN6Genode6Thread23stack_area_virtual_baseEv() /
++                          _ZN6Genode6Thread18stack_virtual_sizeEv();
++    int thread_id_base = ((unsigned long)&thread_ids_base) /
++                         _ZN6Genode6Thread18stack_virtual_sizeEv();
++
++    if (thread_id_base < thread_ids_base || thread_id_base - thread_ids_base >= 256) {
++        perror("qemu_get_thread_id calculation failed");
++        exit(1);
++    }
++
++    printf("%s %d\n", __func__, thread_id_base - thread_ids_base);
++
++    return thread_id_base - thread_ids_base;
++#else
+     /* thread id is up to INT_MAX */
+     long tid;
+     thr_self(&tid);
+     return (int)tid;
++#endif
+ #elif defined(__NetBSD__)
+     return _lwp_self();
+ #elif defined(__OpenBSD__)
+@@ -635,6 +656,10 @@
+     char *name = NULL;
+ 
+ #if defined(__FreeBSD__)
++#if 1
++    perror("qemu_get_pid_name not implemented");
++    exit(1);
++#else
+     /* BSDs don't have /proc, but they provide a nice substitute */
+     struct kinfo_proc *proc = kinfo_getproc(pid);
+ 
+@@ -642,6 +667,7 @@
+ //        name = g_strdup(proc->ki_comm);
+         free(proc);
+     }
++#endif
+ #else
+     /* Assume a system with reasonable procfs */
+     char *pid_path;
+@@ -656,6 +682,10 @@
+ }
+ 
+ 
++extern void * _ZN6Genode6Thread21alloc_secondary_stackEPKcm(void * thread, char const *name, size_t stack_size);
++extern void * _ZN6Genode6Thread6myselfEv(void);
++extern int    _ZN4Libc26pthread_create_from_threadEPP7pthreadRN6Genode6ThreadEPv(pthread_t *, void * thread, void * stack_address);
++
+ void *qemu_alloc_stack(size_t *sz)
+ {
+     void *ptr;
+@@ -664,6 +694,9 @@
+     void *ptr2;
+ #endif
+     size_t pagesz = qemu_real_host_page_size();
++
++    printf("%s pagesz=%lu sz=%lu\n", __func__, pagesz, *sz);
++
+ #ifdef _SC_THREAD_STACK_MIN
+     /* avoid stacks smaller than _SC_THREAD_STACK_MIN */
+     long min_stack_sz = sysconf(_SC_THREAD_STACK_MIN);
+@@ -674,6 +707,30 @@
+     /* allocate one extra page for the guard page */
+     *sz += pagesz;
+ 
++#if 1 /* Genode stack allocation style via using base ABI directly */
++    {
++        void * gt_myself  = _ZN6Genode6Thread6myselfEv();
++        size_t stack_size = MIN(_ZN6Genode6Thread18stack_virtual_sizeEv() - 3 * 4096,
++                                *sz);
++
++        ptr = _ZN6Genode6Thread21alloc_secondary_stackEPKcm(gt_myself,
++                                                            "ucontext",
++                                                            stack_size);
++
++        pthread_t * gt_pthread = malloc(sizeof(pthread_t));
++
++        int res = _ZN4Libc26pthread_create_from_threadEPP7pthreadRN6Genode6ThreadEPv(gt_pthread, gt_myself, ptr);
++        if (res)
++            printf("%s: secondary pthread stack res=%d failed\n", __func__, res);
++
++        uintptr_t align_ptr = ((uintptr_t)ptr) & ~0xffful;
++        ptr = (void *)(align_ptr - stack_size + (align_ptr ? 4096 : 0));
++        *sz = stack_size - (align_ptr ? 4096 : 0);
++    }
++
++    return ptr;
++#endif
++
+     flags = MAP_PRIVATE | MAP_ANONYMOUS;
+ #if defined(MAP_STACK) && defined(__OpenBSD__)
+     /* Only enable MAP_STACK on OpenBSD. Other OS's such as

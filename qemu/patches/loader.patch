@@ -1,0 +1,30 @@
+--- a/qemu/hw/core/loader.c
++++ b/qemu/hw/core/loader.c
+@@ -1075,7 +1075,7 @@
+ {
+     MachineClass *mc = MACHINE_GET_CLASS(qdev_get_machine());
+     Rom *rom;
+-    ssize_t rc;
++    ssize_t rc = 0, len = 0;
+     int fd = -1;
+     char devpath[100];
+ 
+@@ -1116,10 +1116,14 @@
+     rom->datasize = rom->romsize;
+     rom->data     = g_malloc0(rom->datasize);
+     lseek(fd, 0, SEEK_SET);
+-    rc = read(fd, rom->data, rom->datasize);
+-    if (rc != rom->datasize) {
+-        fprintf(stderr, "rom: file %-20s: read error: rc=%zd (expected %zd)\n",
+-                rom->name, rc, rom->datasize);
++    do {
++        rc = read(fd, rom->data + len, rom->datasize - len);
++        if (rc >= 0) len += rc;
++    } while (rc > 0 && len < rom->datasize);
++
++    if (len != rom->datasize) {
++        fprintf(stderr, "rom: file %-20s: read error: rc=%zd (got %zd, expected %zd)\n",
++                rom->name, rc, len, rom->datasize);
+         goto err;
+     }
+     close(fd);
