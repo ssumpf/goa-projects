@@ -2,7 +2,7 @@
 	<requires>
 		<gui/>
 		<nic/>
-		<rom label="mesa_gpu_drv.lib.so"/>
+		<rom label="mesa_gpu.lib.so"/>
 		<file_system label="games"/>
 		<rm/>
 		<gpu/>
