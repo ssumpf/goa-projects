@@ -2,8 +2,7 @@
 
 	<requires>
 		<gui/>
-		<rom label="mesa_gpu_drv.lib.so"/>
-		<rm/>
+		<rom label="mesa_gpu.lib.so"/>
 		<gpu/>
 		<timer/>
 	</requires>
