@@ -1,13 +1,13 @@
-<depot user>/src/libc
-<depot user>/src/openal
-<depot user>/src/zlib
-<depot user>/src/sdl2
-<depot user>/src/stdcxx
-<depot user>/src/vfs
-<depot user>/src/vfs_lxip
-<depot user>/src/mesa
-<depot user>/src/libiconv
-<depot user>/src/expat
-<depot user>/src/libdrm
-<depot user>/src/vfs_gpu
-<depot user>/src/vfs_oss
+_/src/libc
+_/src/openal
+_/src/zlib
+_/src/sdl2
+_/src/stdcxx
+_/src/vfs
+_/src/vfs_lxip
+_/src/mesa
+_/src/libiconv
+_/src/expat
+_/src/libdrm
+_/src/vfs_gpu
+_/src/vfs_oss

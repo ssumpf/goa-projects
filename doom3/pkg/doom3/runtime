@@ -4,12 +4,14 @@
 		<nic/>
 		<rom label="mesa_gpu.lib.so"/>
 		<file_system label="games"/>
+		<file_system label="savegames"/>
 		<rm/>
 		<gpu/>
 		<play/>
 	</requires>
 
-	<config ld_verbose="yes">
+	<config ld_verbose="yes" mouse_grab="yes">
+		<initial width="1280" height="720"/>
 		<env key="HOME" value="/"/>
 		<env key="MESA_DEBUG" value="silent"/>
 		<libc stdout="/dev/log" stderr="/dev/log" rtc="/dev/rtc" socket="/socket"/>
@@ -20,7 +22,20 @@
 			<dir name="socket"> <lxip dhcp="yes"/> </dir>
 			<dir name=".config">
 				<dir name="dhewm3">
-					<fs writable="yes" label="games"/>
+					<dir name="base">
+						<fs writeable="yes" label="games"/>
+					</dir>
+				</dir>
+			</dir>
+			<dir name=".local">
+				<dir name="share">
+					<dir name="dhewm3">
+						<dir name="base">
+							<dir name="savegames">
+								<fs writeable="yes" label="savegames"/>a
+							</dir>
+						</dir>
+					</dir>
 				</dir>
 			</dir>
 		</vfs>

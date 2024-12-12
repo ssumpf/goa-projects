@@ -1,7 +1,7 @@
-<depot user>/api/base
-<depot user>/api/libc
-<depot user>/api/openal
-<depot user>/api/sdl2
-<depot user>/api/so
-<depot user>/api/stdcxx
-<depot user>/api/zlib
+_/api/base
+_/api/libc
+_/api/openal
+_/api/sdl2
+_/api/so
+_/api/stdcxx
+_/api/zlib
