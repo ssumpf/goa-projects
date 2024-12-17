@@ -140,3 +140,36 @@ index 58c878f..3ba8f05 100644
  
  #ifdef D3_HAVE_LIBBACKTRACE
  // non-ancient versions of GCC and clang include libbacktrace
+diff --git a/neo/sys/posix/posix_net.cpp b/neo/sys/posix/posix_net.cpp
+index c7c012d..66b5c63 100644
+--- a/neo/sys/posix/posix_net.cpp
++++ b/neo/sys/posix/posix_net.cpp
+@@ -342,18 +342,27 @@ static int IPSocket( const char *net_interface, int port, netadr_t *bound_to = N
+ 		return 0;
+ 	}
+ 	// make it non-blocking
++#if defined(__GENODE__)
++	int  flags = fcntl(newsocket, F_GETFL, 0);
++	if (fcntl(newsocket, F_SETFL, flags | O_NONBLOCK) != 0) {
++		common->Printf( "ERROR: IPSocket: O_NONBLOCK:%s\n",
++		                strerror( errno ) );
++		return 0;
++	}
++#else
+ 	int on = 1;
+ 	if ( ioctl( newsocket, FIONBIO, &on ) == -1 ) {
+ 		common->Printf( "ERROR: IPSocket: ioctl FIONBIO:%s\n",
+ 				   strerror( errno ) );
+ 		return 0;
+ 	}
++
+ 	// make it broadcast capable
+ 	if ( setsockopt( newsocket, SOL_SOCKET, SO_BROADCAST, (char *) &i, sizeof(i) ) == -1 ) {
+ 		common->Printf( "ERROR: IPSocket: setsockopt SO_BROADCAST:%s\n", strerror( errno ) );
+ 		return 0;
+ 	}
+-
++#endif
+ 	if ( !net_interface || !net_interface[ 0 ]
+ 		|| !idStr::Icmp( net_interface, "localhost" ) ) {
+ 		address.sin_addr.s_addr = INADDR_ANY;
