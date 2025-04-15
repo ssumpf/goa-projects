@@ -1,7 +1,16 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 33ddefd9..6f00d5b3 100644
+index adfe087..68cb208 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
+@@ -143,7 +143,7 @@ endif()
+ 
+ check_include_file(sys/shm.h HAVE_SYS_SHM_H)
+ check_include_file(alloca.h HAVE_ALLOCA_H)
+-if(ENABLE_OSS)
++if(ENABLE_OSS AND NOT GENODE)
+ 	check_include_file(soundcard.h HAVE_SOUNDCARD_H)
+ 	check_include_file(sys/soundcard.h HAVE_SYS_SOUNDCARD_H)
+ 	check_include_file(machine/soundcard.h HAVE_MACHINE_SOUNDCARD_H)
 @@ -416,7 +416,7 @@ endif()
  if(ANDROID AND ENABLE_VIDEO)
  	list(APPEND LINK_LIBS EGL GLESv3 android)
@@ -12,7 +21,7 @@ index 33ddefd9..6f00d5b3 100644
  endif()
  if(ALSA_FOUND)
 diff --git a/src/base/msticker.c b/src/base/msticker.c
-index d1f9cc79..9ca2a585 100644
+index d1f9cc7..9ca2a58 100644
 --- a/src/base/msticker.c
 +++ b/src/base/msticker.c
 @@ -353,7 +353,7 @@ static int set_high_prio(MSTicker *obj) {
@@ -25,7 +34,7 @@ index d1f9cc79..9ca2a585 100644
  		int policy = SCHED_RR;
  		int result = 0;
 diff --git a/src/utils/dsptools.c b/src/utils/dsptools.c
-index 456508b0..87a29975 100644
+index 456508b..87a2997 100644
 --- a/src/utils/dsptools.c
 +++ b/src/utils/dsptools.c
 @@ -61,6 +61,8 @@

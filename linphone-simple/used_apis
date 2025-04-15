@@ -1,6 +1,6 @@
-ssumpf/api/libc
-ssumpf/api/qt5_base
-ssumpf/api/qt5_component
-ssumpf/api/qt5_declarative
-ssumpf/api/so
-ssumpf/api/stdcxx
+_/api/libc
+_/api/qt5_base
+_/api/qt5_component
+_/api/qt5_declarative
+_/api/so
+_/api/stdcxx

@@ -7,9 +7,7 @@ DOWNLOADS := linphone-sdk.git bctoolbox.git belle-sip.git belr.git \
              liblinphone.git mediastreamer2.git mswebrtc.git webrtc.git \
              ortp.git
 
-#DOWNLOADS := liblinphone.git
-
-DEPTH := 300
+DEPTH := 1000
 
 URL(linphone-sdk) := https://gitlab.linphone.org/BC/public/linphone-sdk.git
 REV(linphone-sdk) := 5bbd9ec01dfb725a3dfaaab4d8b08fc2cefcc4d7
@@ -39,7 +37,7 @@ URL(external-libxml2) := https://gitlab.linphone.org/BC/public/external/libxml2.
 REV(external-libxml2) := 0c3727603137d62b09648ce20d819f27d35e913e
 DIR(external-libxml2) := src/external/libxml2
 
-URL(external-mbedtls) := https://gitlab.linphone.org/BC/public/external/mbedtls.git --depth $(DEPTH)
+URL(external-mbedtls) := https://gitlab.linphone.org/BC/public/external/mbedtls.git
 REV(external-mbedtls) := 2acc0f26e6e97c82ff9981c1ec32b497d4ea9426
 DIR(external-mbedtls) := src/external/mbedtls
 
@@ -55,7 +53,7 @@ URL(external-sqlite3) := https://gitlab.linphone.org/BC/public/external/sqlite3.
 REV(external-sqlite3) := 2ad0736620e82b47ee9ac5810f8e55abb6d46df9
 DIR(external-sqlite3) := src/external/sqlite3
 
-URL(external-srtp) := https://gitlab.linphone.org/BC/public/external/srtp.git --depth $(DEPTH)
+URL(external-srtp) := https://gitlab.linphone.org/BC/public/external/srtp.git
 REV(external-srtp) := c136e9462551add57ad29844822e1f5dece4e4d7
 DIR(external-srtp) := src/external/srtp
 
@@ -63,7 +61,7 @@ URL(external-zlib) := https://gitlab.linphone.org/BC/public/external/zlib.git --
 REV(external-zlib) := 3c5c87046a6d94df354e0e0ca7fc3c981fbdf61e
 DIR(external-zlib) := src/external/zlib
 
-URL(liblinphone) := https://gitlab.linphone.org/BC/public/liblinphone.git --depth 300
+URL(liblinphone) := https://gitlab.linphone.org/BC/public/liblinphone.git --depth $(DEPTH)
 REV(liblinphone) := 46c26da3d4134971f1203dc7e4ddab40ff6af876
 DIR(liblinphone) := src/liblinphone
 
@@ -124,11 +122,22 @@ $1.git : remove_$1
 endef
 
 #
+# like clone_git_module but removes broken symlinks in src
+#
+define clone_git_module_and_clean
+remove_$1 : $2
+	$(VERBOSE)rmdir ${DIR($1)}
+	$(VEROBSE)find ${DIR(linphone.sdk)} -xtype l -delete
+$1.git : remove_$1
+endef
+
+#
 # Filter out linphone-sdk.git as it is the main dependency while
 # webrtc.git depends on mswebrtc.git.
 #
-FILTER_DOWNLOADS := linphone-sdk webrtc
+FILTER_DOWNLOADS := linphone-sdk webrtc ortp
 MOD_LIST         := $(filter-out $(FILTER_DOWNLOADS),$(DOWNLOADS:%.git=%))
 $(foreach MOD,$(MOD_LIST),$(eval $(call clone_git_module,$(MOD),linphone-sdk.git)))
 
 $(eval $(call clone_git_module,webrtc,mswebrtc.git))
+$(eval $(call clone_git_module_and_clean,ortp,linphone-sdk.git))
