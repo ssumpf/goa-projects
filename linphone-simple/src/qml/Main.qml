@@ -279,7 +279,7 @@ Page {
                     // extract '... <sip:foo@domain.tld>, ...' -> foo, domain.tld
                     var caller = statusTextReceived.slice(statusTextReceived.indexOf("sip:") + 4);
                     caller = caller.slice(0,caller.indexOf(" "));
-                    caller = caller.replace(/\>,$/, "").split("@");
+                    caller = caller.replace(/,$/, "").split("@");
 
                     showIncomingCall(caller);
                 } //else console.log("We are receiving a call but we are already in one");
