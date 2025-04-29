@@ -23,7 +23,7 @@
 			<dir name=".config">
 				<dir name="dhewm3">
 					<dir name="base">
-						<fs writeable="yes" label="games"/>
+						<fs writeable="yes" label="games -> /"/>
 					</dir>
 				</dir>
 			</dir>
@@ -32,7 +32,7 @@
 					<dir name="dhewm3">
 						<dir name="base">
 							<dir name="savegames">
-								<fs writeable="yes" label="savegames"/>a
+								<fs writeable="yes" label="savegames -> /"/>a
 							</dir>
 						</dir>
 					</dir>
