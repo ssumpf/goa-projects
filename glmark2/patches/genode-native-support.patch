@@ -1,13 +1,13 @@
-From 17663717dce8c2ddec11ba76b237ce192c53fb6d Mon Sep 17 00:00:00 2001
+From 7abf88880425c46876e6e9d00db07b182526ea04 Mon Sep 17 00:00:00 2001
 From: Sebastian Sumpf <sebastian.sumpf@genode-labs.com>
-Date: Fri, 7 Jun 2024 20:15:19 +0200
-Subject: [PATCH] genode native support
+Date: Thu, 21 Aug 2025 10:02:58 +0200
+Subject: [PATCH] genode native support (25.04)
 
 ---
- src/dummies.c              |  24 +++++++
- src/native-state-genode.cc |  54 ++++++++++++++++
- src/native-state-genode.h  | 124 +++++++++++++++++++++++++++++++++++++
- 3 files changed, 202 insertions(+)
+ src/dummies.c              |  24 ++++++++
+ src/native-state-genode.cc |  54 +++++++++++++++++
+ src/native-state-genode.h  | 117 +++++++++++++++++++++++++++++++++++++
+ 3 files changed, 195 insertions(+)
  create mode 100644 src/dummies.c
  create mode 100644 src/native-state-genode.cc
  create mode 100644 src/native-state-genode.h
@@ -104,10 +104,10 @@ index 0000000..c98a9af
 +
 diff --git a/src/native-state-genode.h b/src/native-state-genode.h
 new file mode 100644
-index 0000000..3cc049d
+index 0000000..7072ac8
 --- /dev/null
 +++ b/src/native-state-genode.h
-@@ -0,0 +1,124 @@
+@@ -0,0 +1,117 @@
 +#ifndef _NATIVE_STATE_GENODE_H_
 +#define _NATIVE_STATE_GENODE_H_
 +
@@ -127,35 +127,30 @@ index 0000000..3cc049d
 +
 +		struct Window : Genode_egl_window
 +		{
-+			using View_handle = Gui::Session::View_handle;
-+			using Command = Gui::Session::Command;
-+
-+			Genode::Env      &env;
-+			Framebuffer::Mode mode;
-+			Gui::Connection   gui { env };
++			Genode::Env        &env;
++			Framebuffer::Mode   mode;
++			Gui::Connection     gui { env };
 +			Genode::Constructible<Genode::Attached_dataspace> ds { };
-+			View_handle       view { };
++			Gui::Top_level_view view { gui };
 +
 +			Window(Genode::Env &env, int w, int h)
 +			:
-+				env(env), mode { .area = Gui::Area(w, h) }
++				env(env), mode { .area = Gui::Area(w, h), .alpha = false }
 +			{
 +				width  = w;
 +				height = h;
 +				type   = WINDOW;
 +
-+				gui.buffer(mode, false);
-+				view = gui.create_view();
++				gui.buffer(mode);
 +				mode_change();
 +
-+				gui.enqueue<Command::Title>(view, "glMark2");
-+				gui.enqueue<Command::To_front>(view, View_handle());
++				gui.enqueue<Gui::Session::Command::Title>(view.id(), "glMark2");
 +				gui.execute();
 +			}
 +
 +			void refresh()
 +			{
-+				gui.framebuffer()->refresh(0, 0, mode.area.w, mode.area.h);
++				gui.framebuffer.refresh({ { 0, 0 }, mode.area });
 +			}
 +
 +			void mode_change()
@@ -166,13 +161,11 @@ index 0000000..3cc049d
 +				if (ds.constructed())
 +					ds.destruct();
 +
-+				ds.construct(env.rm(), gui.framebuffer()->dataspace());
++				ds.construct(env.rm(), gui.framebuffer.dataspace());
 +
 +				addr = ds->local_addr<unsigned char>();
 +
-+				Gui::Rect rect { Gui::Point { 0, 0 }, mode.area };
-+				gui.enqueue<Command::Geometry>(view, rect);
-+				gui.execute();
++				view.area(mode.area);
 +			}
 +		};
 +
@@ -233,5 +226,5 @@ index 0000000..3cc049d
 +
 +#endif /* _NATIVE_STATE_GENODE_H_ */
 -- 
-2.45.2
+2.49.0
 
