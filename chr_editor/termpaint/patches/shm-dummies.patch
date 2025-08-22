@@ -1,0 +1,84 @@
+From 170f9619a7d15ced52d6a2c40688b8f2efe5e2b3 Mon Sep 17 00:00:00 2001
+From: Sebastian Sumpf <sebastian.sumpf@genode-labs.com>
+Date: Fri, 22 Aug 2025 20:56:53 +0200
+Subject: [PATCH] shm: dummies
+
+---
+ dummies.c   | 13 +++++++++++++
+ meson.build |  1 +
+ sys/shm.h   | 31 +++++++++++++++++++++++++++++++
+ 3 files changed, 45 insertions(+)
+ create mode 100644 dummies.c
+ create mode 100644 sys/shm.h
+
+diff --git dummies.c dummies.c
+new file mode 100644
+index 0000000..8f11cbf
+--- /dev/null
++++ dummies.c
+@@ -0,0 +1,13 @@
++#include <sys/shm.h>
++#include <sys/mman.h>
++
++int shm_open(const char *, int, mode_t)
++{
++	printf("%s:%d: called not implemented\n", __func__, __LINE__);
++	return 0;
++}
++
++void closefrom(int)
++{
++	printf("%s:%d: called not implemented\n", __func__, __LINE__);
++}
+diff --git meson.build meson.build
+index 3b2819a..83da5ff 100644
+--- meson.build
++++ meson.build
+@@ -106,6 +106,7 @@ main_lib_files = [
+   'termpaintx.c',
+   'termpaintx_ttyrescue.c',
+   'ttyrescue.c',
++  'dummies.c',
+   debugwin_inc,
+   ttyrescue_blob_inc
+ ]
+diff --git sys/shm.h sys/shm.h
+new file mode 100644
+index 0000000..65f4465
+--- /dev/null
++++ sys/shm.h
+@@ -0,0 +1,31 @@
++#pragma once
++
++#include <sys/cdefs.h>
++#include <sys/ipc.h>
++#include <stdio.h>
++
++struct shmid_ds;
++
++static inline int shmget(key_t, size_t, int)
++{
++	printf("%s:%d: called not implemented\n", __func__, __LINE__);
++	return 0;
++}
++
++static inline int shmctl(int, int, struct shmid_ds *)
++{
++	printf("%s:%d: called not implemented\n", __func__, __LINE__);
++	return 0;
++}
++
++static inline int shmdt(const void *)
++{
++	printf("%s:%d: called not implemented\n", __func__, __LINE__);
++	return 0;
++}
++
++static inline void *shmat(int, const void *, int)
++{
++	printf("%s:%d: called not implemented\n", __func__, __LINE__);
++	return NULL;
++}
+-- 
+2.49.0
+

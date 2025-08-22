@@ -1,0 +1,11 @@
+LICENSE   := BSL-1.0
+VERSION   := 0.3.1
+DOWNLOADS := termpaint.git
+
+URL(termpaint) := https://github.com/termpaint/termpaint
+REV(termpaint) := 69f8e9a1f866f6d4f682040d872ab93f3360f6df
+DIR(termpaint) := src
+
+PATCHES := $(addprefix patches/,shm-dummies.patch)
+
+PATCH_OPT := -p0 -d src

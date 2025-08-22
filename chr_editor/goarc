@@ -1,0 +1,2 @@
+set cc_cxx_opt_std "-std=gnu++14"
+set warn_strict 0
