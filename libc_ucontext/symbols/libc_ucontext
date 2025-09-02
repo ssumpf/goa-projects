@@ -1,2 +1,6 @@
+genode_allocate_secondary_stack T
+genode_pthread_create_from_thread T
+genode_stack_area_virtual_base T
+genode_stack_virtual_size T
 getcontext T
 swapcontext T
