@@ -1,24 +1,32 @@
+diff --git a/qemu/util/oslib-posix.c b/qemu/util/oslib-posix.c
+index 2d6dc7f..78fa336 100644
 --- a/qemu/util/oslib-posix.c
 +++ b/qemu/util/oslib-posix.c
-@@ -92,15 +92,36 @@
- static QemuMutex page_mutex;
- static QemuCond page_cond;
+@@ -57,6 +57,10 @@
+ #include <lwp.h>
+ #endif
  
-+/* Genode thread base ABI */
-+extern unsigned long _ZN6Genode6Thread23stack_area_virtual_baseEv(void);
-+extern unsigned long _ZN6Genode6Thread18stack_virtual_sizeEv(void);
++#ifdef __GENODE__
++#include <genode_secondary_stack.h>
++#endif
 +
- int qemu_get_thread_id(void)
- {
+ #include "qemu/mmap-alloc.h"
+ 
+ #define MAX_MEM_PREALLOC_THREAD_COUNT 16
+@@ -97,10 +101,31 @@ int qemu_get_thread_id(void)
  #if defined(__linux__)
      return syscall(SYS_gettid);
  #elif defined(__FreeBSD__)
-+#if 1
++#ifdef __GENODE__
++
 +    /* on Genode stacks are max 1M - XXX potential to break unnoticed */
-+    int thread_ids_base = _ZN6Genode6Thread23stack_area_virtual_baseEv() /
-+                          _ZN6Genode6Thread18stack_virtual_sizeEv();
++    int thread_ids_base = genode_stack_area_virtual_base() /
++                          genode_stack_virtual_size();
++
++
 +    int thread_id_base = ((unsigned long)&thread_ids_base) /
-+                         _ZN6Genode6Thread18stack_virtual_sizeEv();
++                          genode_stack_virtual_size();
++
 +
 +    if (thread_id_base < thread_ids_base || thread_id_base - thread_ids_base >= 256) {
 +        perror("qemu_get_thread_id calculation failed");
@@ -37,7 +45,7 @@
  #elif defined(__NetBSD__)
      return _lwp_self();
  #elif defined(__OpenBSD__)
-@@ -635,6 +656,10 @@
+@@ -635,6 +660,10 @@ char *qemu_get_pid_name(pid_t pid)
      char *name = NULL;
  
  #if defined(__FreeBSD__)
@@ -48,7 +56,7 @@
      /* BSDs don't have /proc, but they provide a nice substitute */
      struct kinfo_proc *proc = kinfo_getproc(pid);
  
-@@ -642,6 +667,7 @@
+@@ -642,6 +671,7 @@ char *qemu_get_pid_name(pid_t pid)
  //        name = g_strdup(proc->ki_comm);
          free(proc);
      }
@@ -56,18 +64,15 @@
  #else
      /* Assume a system with reasonable procfs */
      char *pid_path;
-@@ -656,6 +682,10 @@
+@@ -655,7 +685,6 @@ char *qemu_get_pid_name(pid_t pid)
+     return name;
  }
  
- 
-+extern void * _ZN6Genode6Thread21alloc_secondary_stackEPKcm(void * thread, char const *name, size_t stack_size);
-+extern void * _ZN6Genode6Thread6myselfEv(void);
-+extern int    _ZN4Libc26pthread_create_from_threadEPP7pthreadRN6Genode6ThreadEPv(pthread_t *, void * thread, void * stack_address);
-+
+-
  void *qemu_alloc_stack(size_t *sz)
  {
      void *ptr;
-@@ -664,6 +694,9 @@
+@@ -664,6 +693,9 @@ void *qemu_alloc_stack(size_t *sz)
      void *ptr2;
  #endif
      size_t pagesz = qemu_real_host_page_size();
@@ -77,23 +82,19 @@
  #ifdef _SC_THREAD_STACK_MIN
      /* avoid stacks smaller than _SC_THREAD_STACK_MIN */
      long min_stack_sz = sysconf(_SC_THREAD_STACK_MIN);
-@@ -674,6 +707,30 @@
+@@ -674,6 +706,26 @@ void *qemu_alloc_stack(size_t *sz)
      /* allocate one extra page for the guard page */
      *sz += pagesz;
  
-+#if 1 /* Genode stack allocation style via using base ABI directly */
++#ifdef __GENODE__  /* Genode stack allocation style via using base ABI directly */
 +    {
-+        void * gt_myself  = _ZN6Genode6Thread6myselfEv();
-+        size_t stack_size = MIN(_ZN6Genode6Thread18stack_virtual_sizeEv() - 3 * 4096,
++        size_t stack_size = MIN(genode_stack_virtual_size() - 3 * 4096,
 +                                *sz);
 +
-+        ptr = _ZN6Genode6Thread21alloc_secondary_stackEPKcm(gt_myself,
-+                                                            "ucontext",
-+                                                            stack_size);
-+
++        ptr = genode_allocate_secondary_stack("ucontext", stack_size);
 +        pthread_t * gt_pthread = malloc(sizeof(pthread_t));
 +
-+        int res = _ZN4Libc26pthread_create_from_threadEPP7pthreadRN6Genode6ThreadEPv(gt_pthread, gt_myself, ptr);
++        int res = genode_pthread_create_from_thread(gt_pthread, ptr);
 +        if (res)
 +            printf("%s: secondary pthread stack res=%d failed\n", __func__, res);
 +
