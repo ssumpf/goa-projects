@@ -3,7 +3,11 @@ set version(genodelabs/src/fs_report) 2025-04-09
 set version(ssumpf_test/api/libc_ucontext) 25.04
 set version(ssumpf_test/src/libc_ucontext) 25.04
 
-set version(ssumpf_test/api/glib) 2024-10-07
+# Genode world
+#set version(ssumpf_test/api/glib) 2024-10-07
+
+# goa project
+set version(ssumpf_test/api/glib) 2025-08-25
 set version(ssumpf_test/api/libc) 2025-08-30
 
 set version(ssumpf_test/src/ffi)  2025-09-04
