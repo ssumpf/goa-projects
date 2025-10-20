@@ -7,7 +7,7 @@ DOWNLOADS := linphone-sdk.git bctoolbox.git belle-sip.git belr.git \
              liblinphone.git mediastreamer2.git mswebrtc.git webrtc.git \
              ortp.git
 
-DEPTH := 1000
+DEPTH := 10000
 
 URL(linphone-sdk) := https://gitlab.linphone.org/BC/public/linphone-sdk.git
 REV(linphone-sdk) := 5bbd9ec01dfb725a3dfaaab4d8b08fc2cefcc4d7
@@ -29,7 +29,7 @@ URL(bzrtp) := https://gitlab.linphone.org/BC/public/bzrtp.git --depth $(DEPTH)
 REV(bzrtp) := 922bd8a4f14e37c8a7702ecbc4e4d78d360081dd
 DIR(bzrtp) := src/bzrtp
 
-URL(external-decaf) := https://gitlab.linphone.org/BC/public/external/decaf.git --depth $(DEPTH)
+URL(external-decaf) := https://gitlab.linphone.org/BC/public/external/decaf.git
 REV(external-decaf) := 4d7bafff3a69c9d02b8addbb78f301a6a74e59ea
 DIR(external-decaf) := src/external/decaf
 
