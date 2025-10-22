@@ -1,4 +1,4 @@
-<runtime ram="160M" caps="500" binary="glmark2">
+<runtime ram="256M" caps="500" binary="glmark2">
 
 	<requires>
 		<gui/>

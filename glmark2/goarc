@@ -1,8 +1,22 @@
 set warn_strict 0
+switch [set sculpt_version] {
+	25.04 {
+		set version(genodelabs/api/jpeg)    7-x-x
+		set version(genodelabs/api/libdrm)  2024-05-28
+		set version(genodelabs/api/libpng)  2019-02-25
 
-set version(genodelabs/api/jpeg)    7-x-x
-set version(genodelabs/api/libdrm)  2024-05-28
-set version(genodelabs/api/libpng)  2019-02-25
+		set version(genodelabs/src/jpeg)    2025-04-09
+		set version(genodelabs/src/libpng)  2025-04-09
+	}
+	25.10 {
+		set version(genodelabs/api/jpeg)    7-x-x
+		set version(genodelabs/api/libdrm)  2024-05-28
+		set version(genodelabs/api/libpng)  2019-02-25
 
-set version(genodelabs/src/jpeg)    2025-04-09
-set version(genodelabs/src/libpng)  2025-04-09
+		set version(genodelabs/src/jpeg)    2025-10-12
+		set version(genodelabs/src/libpng)  2025-10-12
+	}
+	default {
+	}
+}
+
