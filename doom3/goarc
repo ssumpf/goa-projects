@@ -1,2 +1,19 @@
 set cc_cxx_opt_std "-std=gnu++17"
 set warn_strict 0
+
+switch [set sculpt_version] {
+	25.04 {
+	}
+	25.10 {
+		set version(genodelabs/src/vfs_lxip) 2025-10-17
+		set version(genodelabs/src/vfs_oss)  2025-10-12
+
+		set version(ssumpf/api/openal)  2025-10-22
+		set version(ssumpf/api/sdl2)    2024-04-11
+
+		set version(ssumpf/src/sdl2)    2025-10-22
+		set version(ssumpf/src/openal)  2025-10-22
+	}
+	default {
+	}
+}

@@ -1,7 +1,7 @@
-_/api/base
-_/api/libc
-_/api/openal
-_/api/sdl2
-_/api/so
-_/api/stdcxx
-_/api/zlib
+genodelabs/api/base
+genodelabs/api/libc
+genodelabs/api/so
+genodelabs/api/stdcxx
+genodelabs/api/zlib
+ssumpf/api/openal
+ssumpf/api/sdl2
