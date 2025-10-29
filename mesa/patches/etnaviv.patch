@@ -1,0 +1,21 @@
+* disable shader cache
+diff --git a/src/lib/mesa/src/gallium/drivers/etnaviv/etnaviv_disk_cache.c b/src/lib/mesa/src/gallium/drivers/etnaviv/etnaviv_disk_cache.c
+index 7d43fe0..9622ac3 100644
+--- a/src/lib/mesa/src/gallium/drivers/etnaviv/etnaviv_disk_cache.c
++++ b/src/lib/mesa/src/gallium/drivers/etnaviv/etnaviv_disk_cache.c
+@@ -37,6 +37,7 @@ etna_disk_cache_init(struct etna_compiler *compiler, const char *renderer)
+    if (DBG_ENABLED(ETNA_DBG_NOCACHE))
+       return;
+ 
++#ifdef ENABLE_SHADER_CACHE
+    const struct build_id_note *note =
+          build_id_find_nhdr_for_addr(etna_disk_cache_init);
+    assert(note && build_id_length(note) == 20); /* sha1 */
+@@ -48,6 +49,7 @@ etna_disk_cache_init(struct etna_compiler *compiler, const char *renderer)
+    _mesa_sha1_format(timestamp, id_sha1);
+ 
+    compiler->disk_cache = disk_cache_create(renderer, timestamp, etna_mesa_debug);
++#endif
+ }
+ 
+ void

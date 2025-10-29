@@ -1,0 +1,29 @@
+LICENSE   := GPLv2
+VERSION   := 24.0.8
+DOWNLOADS := mesa.archive
+
+#
+# Mesa sources
+#
+URL_BASE      := https://archive.mesa3d.org
+URL(mesa)     := $(URL_BASE)/mesa-$(VERSION).tar.xz
+SHA(mesa)     := d1ed86a266d5b7b8c136ae587ef5618ed1a9837a43440f3713622bf0123bf5c1
+DIR(mesa)     := src
+
+PATCHES       := patches/dri2.patch \
+                 patches/etnaviv.patch \
+                 patches/intel_gen.patch \
+                 patches/iris_bufmgr.patch \
+                 patches/iris_bufmgr_zero.patch \
+                 patches/iris_bufmgr_cache.patch \
+                 patches/iris_utrace.patch \
+                 patches/lima.patch \
+                 patches/loader_fds.patch \
+                 patches/mesa.patch \
+                 patches/os_dupfd.patch \
+                 patches/os_mmap.patch \
+                 patches/softpipe_cache.patch \
+                 patches/sync_wait.patch
+
+PATCH_OPT     := -p4 -d src
+
