@@ -1,0 +1,17 @@
+_glapi_Context B 8
+_glapi_Dispatch B 8
+_glapi_add_dispatch T
+_glapi_check_multithread T
+_glapi_destroy_multithread T
+_glapi_get_context T
+_glapi_get_dispatch T
+_glapi_get_dispatch_table_size T
+_glapi_get_proc_address T
+_glapi_get_proc_name T
+_glapi_get_proc_offset T
+_glapi_new_nop_table T
+_glapi_noop_enable_warnings T
+_glapi_set_context T
+_glapi_set_dispatch T
+_glapi_set_nop_handler T
+_glapi_set_warning_func T

@@ -1,0 +1,3 @@
+install/lib/dri/mesa.lib.so
+install/lib/egl.lib.so
+install/lib/glapi.lib.so
