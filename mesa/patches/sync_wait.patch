@@ -1,8 +1,7 @@
 Use drm_poll instead of libc version (see: libdrm -> ioctl_dispatch.cc)
-diff --git a/src/lib/mesa/src/util/libsync.h b/src/lib/mesa/src/util/libsync.h
-index 60e3e5d..c81647c 100644
---- a/src/lib/mesa/src/util/libsync.h
-+++ b/src/lib/mesa/src/util/libsync.h
+
+--- a/src/util/libsync.h
++++ b/src/util/libsync.h
 @@ -98,6 +98,7 @@ struct sync_file_info {
  #define SYNC_IOC_FILE_INFO	_IOWR(SYNC_IOC_MAGIC, 4, struct sync_file_info)
  #endif

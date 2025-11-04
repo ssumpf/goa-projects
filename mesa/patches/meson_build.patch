@@ -1,0 +1,154 @@
+diff --git a/meson.build b/meson.build
+index 8963b31..e9d05a8 100644
+--- a/meson.build
++++ b/meson.build
+@@ -392,6 +392,11 @@ with_platform_x11 = _platforms.contains('x11')
+ with_platform_wayland = _platforms.contains('wayland')
+ with_platform_haiku = _platforms.contains('haiku')
+ with_platform_windows = _platforms.contains('windows')
++with_platform_genode = _platforms.contains('genode')
++
++if with_platform_genode
++  with_gallium_kmsro = false
++endif
+ 
+ with_glx = get_option('glx')
+ if with_glx == 'auto'
+@@ -1270,7 +1275,7 @@ if cc.compiles('''#include <stdint.h>
+                               (int)__atomic_add_fetch(x.v, (uint64_t)1, __ATOMIC_ACQ_REL);
+                      }''',
+                   name : 'GCC atomic builtins required -latomic')
+-    dep_atomic = cc.find_library('atomic')
++    dep_atomic = cc.find_library('atomic', required:false)
+   endif
+ endif
+ if not cc.links('''#include <stdint.h>
+@@ -1505,7 +1510,7 @@ ld_args_build_id = cc.get_supported_link_arguments('-Wl,--build-id=sha1')
+ dep_dl = null_dep
+ if host_machine.system() != 'windows'
+   if not cc.has_function('dlopen')
+-    dep_dl = cc.find_library('dl', required : true)
++    dep_dl = cc.find_library('dl', required : false)
+   endif
+   if cc.has_function('dladdr', dependencies : dep_dl)
+     # This is really only required for util/disk_cache.h
+@@ -1531,10 +1536,10 @@ endif
+ if host_machine.system() == 'windows' or cc.has_function('clock_gettime')
+   dep_clock = null_dep
+ else
+-  dep_clock = cc.find_library('rt')
++  dep_clock = cc.find_library('rt', required:false)
+ endif
+ 
+-dep_zlib = dependency('zlib', version : '>= 1.2.3',
++dep_zlib = dependency('zlib',
+                       allow_fallback: true,
+                       required : get_option('zlib'))
+ if dep_zlib.found()
+@@ -1558,6 +1563,9 @@ if host_machine.system() == 'windows'
+   # to pthread for MinGW, so leave the dependency null_dep for Windows. For Windows linking to
+   # kernel32 is enough for c11/threads.h and it's already linked by meson by default
+   dep_thread = null_dep
++elif with_platform_genode
++  dep_thread = null_dep
++  pre_args += '-DHAVE_PTHREAD'
+ else
+   dep_thread = dependency('threads')
+ endif
+@@ -1674,7 +1682,7 @@ endforeach
+ with_gallium_drisw_kms = false
+ if system_has_kms_drm
+   dep_libdrm = dependency(
+-    'libdrm', version : '>=' + _drm_ver,
++    'libdrm',
+     # GNU/Hurd includes egl_dri2, without drm.
+     required : (with_dri2 and host_machine.system() != 'gnu') or with_dri3
+   )
+diff --git a/meson_options.txt b/meson_options.txt
+index 500a2eb..d49592d 100644
+--- a/meson_options.txt
++++ b/meson_options.txt
+@@ -6,7 +6,7 @@ option(
+   type : 'array',
+   value : ['auto'],
+   choices : [
+-    'auto', 'x11', 'wayland', 'haiku', 'android', 'windows',
++    'auto', 'x11', 'wayland', 'haiku', 'android', 'windows', 'genode'
+   ],
+   description : 'window systems to support. If this is set to `auto`, all ' +
+                 'platforms applicable will be enabled.'
+@@ -682,4 +682,4 @@ option(
+   description : 'Build custom xmlconfig (driconf) support. If disabled, ' +
+                 'the default driconf file is hardcoded into Mesa. ' +
+                 'Requires expat.'
+-)
+\ No newline at end of file
++)
+diff --git a/src/egl/meson.build b/src/egl/meson.build
+index 8343bb6..6e71c45 100644
+--- a/src/egl/meson.build
++++ b/src/egl/meson.build
+@@ -161,7 +161,14 @@ if cc.has_function('mincore')
+   c_args_for_egl += '-DHAVE_MINCORE'
+ endif
+ 
+-if not with_glvnd
++
++egl_prefix = host_machine.system() == 'windows' ? 'lib' : []  # always use lib, but avoid warnings on !windows
++egl_suffix = []
++if with_platform_genode
++  egl_lib_name = 'egl'
++  egl_prefix = ''
++  egl_suffix = 'lib.so'
++elif not with_glvnd
+   egl_lib_name = 'EGL' + get_option('egl-lib-suffix')
+   egl_lib_version = '1.0.0'
+   egl_lib_soversion = host_machine.system() == 'windows' ? '' : '1'
+@@ -205,9 +212,8 @@ libegl = shared_library(
+   link_args : [ld_args_bsymbolic, ld_args_gc_sections],
+   dependencies : [deps_for_egl, dep_dl, dep_libdrm, dep_clock, dep_thread, idep_mesautil],
+   install : true,
+-  version : egl_lib_version,
+-  soversion : egl_lib_soversion,
+-  name_prefix : host_machine.system() == 'windows' ? 'lib' : [],  # always use lib, but avoid warnings on !windows
++  name_prefix : egl_prefix,
++  name_suffix : egl_suffix,
+   vs_module_defs : egl_def
+ )
+ 
+diff --git a/src/gallium/targets/dri/meson.build b/src/gallium/targets/dri/meson.build
+index 8392524..28de366 100644
+--- a/src/gallium/targets/dri/meson.build
++++ b/src/gallium/targets/dri/meson.build
+@@ -134,7 +134,6 @@ endforeach
+ prog_ln = find_program('ln', required : false)
+ if prog_ln.found()
+   devenv.set('LIBGL_DRIVERS_PATH', meson.current_build_dir())
+-
+   foreach d : gallium_dri_drivers
+     custom_target(
+       'devenv_@0@'.format(d),
+@@ -150,6 +149,6 @@ meson.add_install_script(
+   install_megadrivers_py.full_path(),
+   libgallium_dri.full_path(),
+   dri_drivers_path,
+-  gallium_dri_drivers,
++  'mesa.lib.so',
+   install_tag : 'runtime',
+ )
+diff --git a/src/mapi/shared-glapi/meson.build b/src/mapi/shared-glapi/meson.build
+index 2cb93d7..d22bc0c 100644
+--- a/src/mapi/shared-glapi/meson.build
++++ b/src/mapi/shared-glapi/meson.build
+@@ -57,9 +57,8 @@ libglapi = shared_library(
+   link_args : [ld_args_gc_sections],
+   include_directories : [inc_src, inc_include, inc_mapi],
+   dependencies : [dep_thread, dep_selinux, idep_mesautil],
+-  soversion : host_machine.system() == 'windows' ? '' : '0',
+-  version : '0.0.0',
+-  name_prefix : host_machine.system() == 'windows' ? 'lib' : [],  # always use lib, but avoid warnings on !windows
++  name_prefix : '',
++  name_suffix : 'lib.so',
+   install : true,
+ )
+ libglapi_build_dir = meson.current_build_dir()

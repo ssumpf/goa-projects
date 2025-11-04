@@ -1,8 +1,7 @@
 * short circuit 'fstat'
-diff --git a/src/lib/mesa/src/gallium/drivers/iris/iris_utrace.c b/src/lib/mesa/src/gallium/drivers/iris/iris_utrace.c
-index 8700857..eafd2e7 100644
---- a/src/lib/mesa/src/gallium/drivers/iris/iris_utrace.c
-+++ b/src/lib/mesa/src/gallium/drivers/iris/iris_utrace.c
+
+--- a/src/gallium/drivers/iris/iris_utrace.c
++++ b/src/gallium/drivers/iris/iris_utrace.c
 @@ -176,12 +176,14 @@ void iris_utrace_init(struct iris_context *ice)
     struct iris_screen *screen = (struct iris_screen *)ice->ctx.screen;
  

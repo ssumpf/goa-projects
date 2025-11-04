@@ -1,8 +1,19 @@
-diff --git a/src/lib/mesa/src/loader/loader.c b/src/lib/mesa/src/loader/loader.c
-index bf90afe..3cce4ce 100644
---- a/src/lib/mesa/src/loader/loader.c
-+++ b/src/lib/mesa/src/loader/loader.c
-@@ -670,6 +670,16 @@ loader_get_driver_for_fd(int fd)
+diff --git a/src/loader/loader.c b/src/loader/loader.c
+index feb22bf..709b99c 100644
+--- a/src/loader/loader.c
++++ b/src/loader/loader.c
+@@ -66,6 +66,10 @@
+ #define __IS_LOADER
+ #include "pci_id_driver_map.h"
+ 
++#ifdef __GENODE__
++#include <genode_fds.h>
++#endif
++
+ /* For systems like Hurd */
+ #ifndef PATH_MAX
+ #define PATH_MAX 4096
+@@ -670,6 +674,16 @@ loader_get_driver_for_fd(int fd)
  {
     char *driver;
  

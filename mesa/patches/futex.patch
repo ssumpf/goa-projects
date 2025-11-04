@@ -1,0 +1,13 @@
+diff --git a/src/util/futex.h b/src/util/futex.h
+index 995c1e2..798a86f 100644
+--- a/src/util/futex.h
++++ b/src/util/futex.h
+@@ -26,6 +26,8 @@
+ 
+ #if defined(HAVE_LINUX_FUTEX_H) && defined(__linux__)
+ #define UTIL_FUTEX_SUPPORTED 1
++#elif defined(__GENODE__)
++#define UTIL_FUTEX_SUPPORTED 0
+ #elif defined(__FreeBSD__)
+ #define UTIL_FUTEX_SUPPORTED 1
+ #elif defined(__OpenBSD__)

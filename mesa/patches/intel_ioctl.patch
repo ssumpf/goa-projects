@@ -1,0 +1,17 @@
+diff --git a/src/intel/common/intel_gem.h b/src/intel/common/intel_gem.h
+index c2d76fc..7ba97bd 100644
+--- a/src/intel/common/intel_gem.h
++++ b/src/intel/common/intel_gem.h
+@@ -79,7 +79,12 @@ intel_ioctl(int fd, unsigned long request, void *arg)
+     int ret;
+ 
+     do {
++#ifdef __GENODE__
++        int genode_ioctl(int, unsigned long, ...);
++        ret = genode_ioctl(fd, request, arg);
++#else
+         ret = ioctl(fd, request, arg);
++#endif
+     } while (ret == -1 && (errno == EINTR || errno == EAGAIN));
+     return ret;
+ }

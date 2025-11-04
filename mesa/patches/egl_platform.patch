@@ -1,0 +1,34 @@
+Add Genode EGLNative*
+
+diff --git a/include/EGL/eglplatform.h b/include/EGL/eglplatform.h
+index 6786afd..36280ab 100644
+--- a/include/EGL/eglplatform.h
++++ b/include/EGL/eglplatform.h
+@@ -145,6 +145,27 @@ typedef void              *EGLNativeDisplayType;
+ typedef khronos_uintptr_t  EGLNativePixmapType;
+ typedef khronos_uintptr_t  EGLNativeWindowType;
+ 
++#elif defined(__GENODE__)
++
++typedef long  EGLNativeDisplayType;
++typedef void *EGLNativePixmapType;
++
++
++enum Surface_type {
++	WINDOW,
++	PIXMAP
++};
++
++struct Genode_egl_window
++{
++	int width;
++	int height;
++	unsigned char *addr;
++	enum Surface_type  type;
++};
++
++typedef struct Genode_egl_window *EGLNativeWindowType;
++
+ #else
+ #error "Platform not recognized"
+ #endif

@@ -4,10 +4,9 @@
 * disable fd operations
 * align size to 2MB in 'iris_bo_alloc' as done in 'alloc_fresh_bo' to not
   pollute bo cache
-diff --git a/src/lib/mesa/src/gallium/drivers/iris/iris_bufmgr.c b/src/lib/mesa/src/gallium/drivers/iris/iris_bufmgr.c
-index 088f34f..98483f3 100644
---- a/src/lib/mesa/src/gallium/drivers/iris/iris_bufmgr.c
-+++ b/src/lib/mesa/src/gallium/drivers/iris/iris_bufmgr.c
+
+--- a/src/gallium/drivers/iris/iris_bufmgr.c
++++ b/src/gallium/drivers/iris/iris_bufmgr.c
 @@ -112,6 +112,8 @@
  
  #define FILE_DEBUG_FLAG DEBUG_BUFMGR

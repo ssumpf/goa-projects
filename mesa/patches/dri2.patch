@@ -1,7 +1,5 @@
-diff --git a/src/lib/mesa/src/gallium/frontends/dri/dri2.c b/src/lib/mesa/src/gallium/frontends/dri/dri2.c
-index ad68f3b..fdd0936 100644
---- a/src/lib/mesa/src/gallium/frontends/dri/dri2.c
-+++ b/src/lib/mesa/src/gallium/frontends/dri/dri2.c
+--- a/src/gallium/frontends/dri/dri2.c
++++ b/src/gallium/frontends/dri/dri2.c
 @@ -650,7 +650,11 @@ dri2_allocate_textures(struct dri_context *ctx,
           whandle.format = format;
           whandle.modifier = DRM_FORMAT_MOD_INVALID;

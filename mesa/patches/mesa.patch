@@ -1,7 +1,5 @@
-diff --git a/src/lib/mesa/src/egl/drivers/dri2/egl_dri2.c b/src/lib/mesa/src/egl/drivers/dri2/egl_dri2.c
-index 992f0e3..1f682fc 100644
---- a/src/lib/mesa/src/egl/drivers/dri2/egl_dri2.c
-+++ b/src/lib/mesa/src/egl/drivers/dri2/egl_dri2.c
+--- a/src/egl/drivers/dri2/egl_dri2.c
++++ b/src/egl/drivers/dri2/egl_dri2.c
 @@ -1170,6 +1170,9 @@ dri2_initialize(_EGLDisplay *disp)
     case _EGL_PLATFORM_ANDROID:
        ret = dri2_initialize_android(disp);
@@ -12,10 +10,8 @@ index 992f0e3..1f682fc 100644
     default:
        unreachable("Callers ensure we cannot get here.");
        return EGL_FALSE;
-diff --git a/src/lib/mesa/src/egl/drivers/dri2/egl_dri2.h b/src/lib/mesa/src/egl/drivers/dri2/egl_dri2.h
-index 57d8820..0d1be58 100644
---- a/src/lib/mesa/src/egl/drivers/dri2/egl_dri2.h
-+++ b/src/lib/mesa/src/egl/drivers/dri2/egl_dri2.h
+--- a/src/egl/drivers/dri2/egl_dri2.h
++++ b/src/egl/drivers/dri2/egl_dri2.h
 @@ -356,6 +356,13 @@ struct dri2_egl_surface {
     bool received_dmabuf_feedback;
  #endif
@@ -40,10 +36,8 @@ index 57d8820..0d1be58 100644
  EGLBoolean
  dri2_initialize_device(_EGLDisplay *disp);
  static inline void
-diff --git a/src/lib/mesa/src/egl/main/egldisplay.c b/src/lib/mesa/src/egl/main/egldisplay.c
-index 4eadb8f..6a46d79 100644
---- a/src/lib/mesa/src/egl/main/egldisplay.c
-+++ b/src/lib/mesa/src/egl/main/egldisplay.c
+--- a/src/egl/main/egldisplay.c
++++ b/src/egl/main/egldisplay.c
 @@ -83,6 +83,7 @@ static const struct {
     {_EGL_PLATFORM_SURFACELESS, "surfaceless"},
     {_EGL_PLATFORM_DEVICE, "device"},
@@ -52,10 +46,8 @@ index 4eadb8f..6a46d79 100644
  };
  
  /**
-diff --git a/src/lib/mesa/src/egl/main/egldisplay.h b/src/lib/mesa/src/egl/main/egldisplay.h
-index b3510ae..14e8354 100644
---- a/src/lib/mesa/src/egl/main/egldisplay.h
-+++ b/src/lib/mesa/src/egl/main/egldisplay.h
+--- a/src/egl/main/egldisplay.h
++++ b/src/egl/main/egldisplay.h
 @@ -55,6 +55,7 @@ enum _egl_platform_type {
     _EGL_PLATFORM_SURFACELESS,
     _EGL_PLATFORM_DEVICE,
@@ -64,10 +56,8 @@ index b3510ae..14e8354 100644
  
     _EGL_NUM_PLATFORMS,
     _EGL_INVALID_PLATFORM = -1
-diff --git a/src/lib/mesa/src/egl/main/egllog.c b/src/lib/mesa/src/egl/main/egllog.c
-index 678bb75..9c16c60 100644
---- a/src/lib/mesa/src/egl/main/egllog.c
-+++ b/src/lib/mesa/src/egl/main/egllog.c
+--- a/src/egl/main/egllog.c
++++ b/src/egl/main/egllog.c
 @@ -55,7 +55,7 @@
  #endif /* HAVE_ANDROID_PLATFORM */
  
@@ -77,10 +67,8 @@ index 678bb75..9c16c60 100644
  
  static struct {
     simple_mtx_t mutex;
-diff --git a/src/lib/mesa/src/loader/loader.c b/src/lib/mesa/src/loader/loader.c
-index 19c456c..bf90afe 100644
---- a/src/lib/mesa/src/loader/loader.c
-+++ b/src/lib/mesa/src/loader/loader.c
+--- a/src/loader/loader.c
++++ b/src/loader/loader.c
 @@ -800,8 +800,7 @@ loader_open_driver_lib(const char *driver_name,
           next = end;
  
@@ -91,10 +79,8 @@ index 19c456c..bf90afe 100644
        driver = dlopen(path, RTLD_NOW | RTLD_GLOBAL);
        if (driver == NULL) {
           snprintf(path, sizeof(path), "%.*s/%s%s.so", len,
-diff --git a/src/lib/mesa/src/util/u_thread.c b/src/lib/mesa/src/util/u_thread.c
-index c508733..b186182 100644
---- a/src/lib/mesa/src/util/u_thread.c
-+++ b/src/lib/mesa/src/util/u_thread.c
+--- a/src/util/u_thread.c
++++ b/src/util/u_thread.c
 @@ -154,7 +154,8 @@ util_set_thread_affinity(thrd_t thread,
  int64_t
  util_thread_get_time_nano(thrd_t thread)
@@ -115,10 +101,8 @@ index c508733..b186182 100644
  
  void util_barrier_init(util_barrier *barrier, unsigned count)
  {
-diff --git a/src/lib/mesa/src/util/u_thread.h b/src/lib/mesa/src/util/u_thread.h
-index b5c7667..7065bc8 100644
---- a/src/lib/mesa/src/util/u_thread.h
-+++ b/src/lib/mesa/src/util/u_thread.h
+--- a/src/util/u_thread.h
++++ b/src/util/u_thread.h
 @@ -116,7 +116,8 @@ static inline bool u_thread_is_self(thrd_t thread)
   * util_barrier
   */

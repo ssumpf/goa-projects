@@ -1,10 +1,8 @@
 Allocate texture cache lazy instead of relying on OS specific VM address space
 reservation via malloc. Safes over 100MB for small scenarios.
 
-diff --git a/src/lib/mesa/src/gallium/drivers/softpipe/sp_tex_sample.c b/src/lib/mesa/src/gallium/drivers/softpipe/sp_tex_sample.c
-index 7edeb2c..139f0d6 100644
---- a/src/lib/mesa/src/gallium/drivers/softpipe/sp_tex_sample.c
-+++ b/src/lib/mesa/src/gallium/drivers/softpipe/sp_tex_sample.c
+--- a/src/gallium/drivers/softpipe/sp_tex_sample.c
++++ b/src/gallium/drivers/softpipe/sp_tex_sample.c
 @@ -724,7 +724,7 @@ get_texel_buffer_no_border(const struct sp_sampler_view *sp_sview,
  
     tile = sp_get_cached_tile_tex(sp_sview->cache, addr);
@@ -47,10 +45,8 @@ index 7edeb2c..139f0d6 100644
  }
  
  
-diff --git a/src/lib/mesa/src/gallium/drivers/softpipe/sp_tex_tile_cache.c b/src/lib/mesa/src/gallium/drivers/softpipe/sp_tex_tile_cache.c
-index 4bc8e3e..bb280e5 100644
---- a/src/lib/mesa/src/gallium/drivers/softpipe/sp_tex_tile_cache.c
-+++ b/src/lib/mesa/src/gallium/drivers/softpipe/sp_tex_tile_cache.c
+--- a/src/gallium/drivers/softpipe/sp_tex_tile_cache.c
++++ b/src/gallium/drivers/softpipe/sp_tex_tile_cache.c
 @@ -222,6 +222,9 @@ sp_find_cached_tile_tex(struct softpipe_tex_tile_cache *tc,
                      pos, tile->addr.bits.x, tile->addr.bits.y, tile->z, tile->face, tile->level);
  #endif
@@ -70,10 +66,8 @@ index 4bc8e3e..bb280e5 100644
        tile->addr = addr;
     }
  
-diff --git a/src/lib/mesa/src/gallium/drivers/softpipe/sp_tex_tile_cache.h b/src/lib/mesa/src/gallium/drivers/softpipe/sp_tex_tile_cache.h
-index a6bb2eb..5998343 100644
---- a/src/lib/mesa/src/gallium/drivers/softpipe/sp_tex_tile_cache.h
-+++ b/src/lib/mesa/src/gallium/drivers/softpipe/sp_tex_tile_cache.h
+--- a/src/gallium/drivers/softpipe/sp_tex_tile_cache.h
++++ b/src/gallium/drivers/softpipe/sp_tex_tile_cache.h
 @@ -60,15 +60,19 @@ union tex_tile_address {
     uint64_t value;
  };

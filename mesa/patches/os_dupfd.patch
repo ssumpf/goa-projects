@@ -1,7 +1,5 @@
-diff --git a/src/lib/mesa/src/util/os_file.c b/src/lib/mesa/src/util/os_file.c
-index 464425a..0590d98 100644
---- a/src/lib/mesa/src/util/os_file.c
-+++ b/src/lib/mesa/src/util/os_file.c
+--- a/src/util/os_file.c
++++ b/src/util/os_file.c
 @@ -53,6 +53,12 @@ os_dupfd_cloexec(int fd)
  int
  os_dupfd_cloexec(int fd)

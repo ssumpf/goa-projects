@@ -1,3 +1,4 @@
 set cc_cxx_opt_std "-std=c++17"
+set license src/docs/license.rst
 set warn_strict 0
 

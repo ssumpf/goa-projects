@@ -1,1 +1,3 @@
-install/include/
+install/include/EGL/
+install/include/GL/
+install/include/KHR/

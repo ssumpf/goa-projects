@@ -11,19 +11,23 @@ SHA(mesa)     := d1ed86a266d5b7b8c136ae587ef5618ed1a9837a43440f3713622bf0123bf5c
 DIR(mesa)     := src
 
 PATCHES       := patches/dri2.patch \
+                 patches/egl_platform.patch \
                  patches/etnaviv.patch \
+                 patches/futex.patch \
                  patches/intel_gen.patch \
+                 patches/intel_ioctl.patch \
                  patches/iris_bufmgr.patch \
-                 patches/iris_bufmgr_zero.patch \
                  patches/iris_bufmgr_cache.patch \
+                 patches/iris_bufmgr_zero.patch \
                  patches/iris_utrace.patch \
                  patches/lima.patch \
                  patches/loader_fds.patch \
                  patches/mesa.patch \
+                 patches/meson_build.patch \
                  patches/os_dupfd.patch \
                  patches/os_mmap.patch \
                  patches/softpipe_cache.patch \
                  patches/sync_wait.patch
 
-PATCH_OPT     := -p4 -d src
+PATCH_OPT     := -p1 -d src
 
