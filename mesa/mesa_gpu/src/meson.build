@@ -9,12 +9,38 @@ pre_args = [
 
 add_project_arguments(pre_args, language : ['c', 'cpp'])
 
-egl_files = ['egl/genode_interface.cc', 'egl/platform.c']
+common_files = ['common/genode_interface.cc', 'common/platform.c']
 
 shared_library('mesa_gpu-iris',
-               [egl_files,
+               [common_files,
                'iris/drm_init.cc',
                'iris/platform_iris.c'],
+               name_prefix : '',
+               name_suffix : 'lib.so',
+               install: true,
+              )
+
+shared_library('mesa_gpu-lima',
+               [common_files,
+               'lima/drm_init.cc',
+               'lima/platform_lima.c'],
+               name_prefix : '',
+               name_suffix : 'lib.so',
+               install: true,
+              )
+
+shared_library('mesa_gpu-etnaviv',
+               [common_files,
+               'etnaviv/drm_init.cc',
+               'etnaviv/platform_etnaviv.c'],
+               name_prefix : '',
+               name_suffix : 'lib.so',
+               install: true,
+              )
+
+shared_library('mesa_gpu-softpipe',
+               [common_files,
+               'softpipe/platform_softpipe.c'],
                name_prefix : '',
                name_suffix : 'lib.so',
                install: true,

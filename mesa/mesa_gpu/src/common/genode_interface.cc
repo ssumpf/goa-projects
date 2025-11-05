@@ -11,8 +11,6 @@
  * under the terms of the GNU Affero General Public License version 3.
  */
 
-/* needed since there exists a 'util/list.h' in mesa */
-//#include <../include/util/list.h>
 #include <blit/blit.h>
 #include <base/log.h>
 

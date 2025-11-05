@@ -156,39 +156,3 @@ dri2_genode_destroy_surface(_EGLDisplay *disp, _EGLSurface *surf)
 
 	return EGL_TRUE;
 }
-
-
-
-EGLBoolean dri2_initialize_genode(_EGLDisplay *disp)
-{
-	void *handle;
-
-	if (!(handle = dlopen("mesa_gpu.lib.so", 0))) {
-		printf("Error: could not open EGL back end driver ('mesa_gpu.lib.so')\n");
-		return EGL_FALSE;
-	}
-
-	/*
-	 * xmlconfig.c expects a valid 'execname' variable (see file). Since
-	 * the fallback 'getprogname' returns NULL, inject something
-	 */
-	driInjectExecName("mesa_app");
-
-	typedef EGLBoolean (*genode_backend)(_EGLDisplay *);
-
-	genode_backend init = (genode_backend)dlsym(handle, "dri2_initialize_genode_backend");
-	if (!init) {
-		printf("Error: could not find 'dri2_initialize_genode_backend'\n");
-		return EGL_FALSE;
-	}
-
-	return init(disp);
-}
-
-EGLBoolean
-dri2_initialize_surfaceless(_EGLDisplay *disp)
-{
-	printf("%s:%d\n", __func__, __LINE__);
-	while (1) ;
-	return false;
-}

@@ -1,1 +1,4 @@
+install/lib/mesa_gpu-etnaviv.lib.so
 install/lib/mesa_gpu-iris.lib.so
+install/lib/mesa_gpu-lima.lib.so
+install/lib/mesa_gpu-softpipe.lib.so
