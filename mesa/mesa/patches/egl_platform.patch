@@ -1,7 +1,5 @@
-Add Genode EGLNative*
+Add "genode" platform
 
-diff --git a/include/EGL/eglplatform.h b/include/EGL/eglplatform.h
-index 6786afd..36280ab 100644
 --- a/include/EGL/eglplatform.h
 +++ b/include/EGL/eglplatform.h
 @@ -145,6 +145,27 @@ typedef void              *EGLNativeDisplayType;
@@ -32,3 +30,83 @@ index 6786afd..36280ab 100644
  #else
  #error "Platform not recognized"
  #endif
+--- /dev/null
++++ b/src/egl/drivers/dri2/platform_genode.c
+@@ -0,0 +1,65 @@
++/**
++ * \brief  Generic EGL-DRI2 back end
++ * \author Sebastian Sumpf
++ * \date   2017-08-17
++ */
++
++/*
++ * Permission is hereby granted, free of charge, to any person obtaining a
++ * copy of this software and associated documentation files (the "Software"),
++ * to deal in the Software without restriction, including without limitation
++ * the rights to use, copy, modify, merge, publish, distribute, sublicense,
++ * and/or sell copies of the Software, and to permit persons to whom the
++ * Software is furnished to do so, subject to the following conditions:
++ *
++ * The above copyright notice and this permission notice shall be included
++ * in all copies or substantial portions of the Software.
++ *
++ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
++ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
++ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
++ * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
++ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
++ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
++ * DEALINGS IN THE SOFTWARE.
++ */
++
++/*
++ * Mesa
++ */
++#include "egl_dri2.h"
++#include <util/xmlconfig.h>
++
++/*
++ * Libc
++ */
++#include <string.h>
++#include <dlfcn.h>
++#include <unistd.h>
++
++
++EGLBoolean dri2_initialize_genode(_EGLDisplay *disp)
++{
++	void *handle;
++
++	if (!(handle = dlopen("mesa_gpu.lib.so", 0))) {
++		printf("Error: could not open EGL back end driver ('mesa_gpu.lib.so')\n");
++		return EGL_FALSE;
++	}
++
++	/*
++	 * xmlconfig.c expects a valid 'execname' variable (see file). Since
++	 * the fallback 'getprogname' returns NULL, inject something
++	 */
++	driInjectExecName("mesa_app");
++
++	typedef EGLBoolean (*genode_backend)(_EGLDisplay *);
++
++	genode_backend init = (genode_backend)dlsym(handle, "dri2_initialize_genode_backend");
++	if (!init) {
++		printf("Error: could not find 'dri2_initialize_genode_backend'\n");
++		return EGL_FALSE;
++	}
++
++	return init(disp);
++}
+--- a/src/egl/meson.build
++++ b/src/egl/meson.build
+@@ -136,6 +136,9 @@ if with_dri2
+     deps_for_egl += [dep_android, idep_u_gralloc]
+     files_egl += files('drivers/dri2/platform_android.c')
+   endif
++  if with_platform_genode
++    files_egl += files('drivers/dri2/platform_genode.c')
++  endif
+ elif with_platform_haiku
+   c_args_for_egl += [
+     '-D_EGL_BUILT_IN_DRIVER_HAIKU',
