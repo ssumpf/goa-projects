@@ -1,3 +1,16 @@
 install/include/EGL/
 install/include/GL/
+install/include/GL/internal/
+install/include/GLES/
+install/include/GLES2/
+install/include/GLES3/
 install/include/KHR/
+install/include/internal/
+install/include/internal/c11/
+install/include/internal/gallium/frontends/dri/
+install/include/internal/main/
+install/include/internal/util/
+install/include/internal/util/format/
+install/include/internal/util/sha1/
+install/include/internal/vk_video/
+install/include/internal/vulkan/

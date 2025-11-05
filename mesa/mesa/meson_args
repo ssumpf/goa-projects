@@ -7,8 +7,8 @@
 -Dgallium-va=disabled
 -Dgallium-vdpau=disabled
 -Dgbm=disabled
--Dgles1=disabled
--Dgles2=disabled
+-Dgles1=enabled
+-Dgles2=enabled
 -Dglx=disabled
 -Dlibunwind=disabled
 -Dllvm=disabled

@@ -24,6 +24,7 @@ PATCHES       := patches/dri2.patch \
                  patches/loader_fds.patch \
                  patches/mesa.patch \
                  patches/meson_build.patch \
+                 patches/meson_headers.patch \
                  patches/os_dupfd.patch \
                  patches/os_mmap.patch \
                  patches/softpipe_cache.patch \

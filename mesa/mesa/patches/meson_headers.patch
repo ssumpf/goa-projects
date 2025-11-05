@@ -1,0 +1,112 @@
+Export headers required by mesa_gpu-*.lib.so
+
+--- a/meson.build
++++ b/meson.build
+@@ -2372,3 +2372,107 @@ if with_perfetto and with_any_datasource
+   perfetto_summary += {'Data source': with_datasources}
+ endif
+ summary(perfetto_summary, section: 'Perfetto', bool_yn: true, list_sep: ' ')
++
++#
++# On Genode install headers required by the mesa_gpu-* egl drivers
++#
++if with_platform_genode
++  install_headers(
++    'include/GL/internal/mesa_interface.h',
++    subdir : 'GL/internal'
++  )
++
++  install_headers(
++    'include/c99_compat.h',
++    'include/kopper_interface.h',
++    'include/no_extern_c.h',
++    subdir : 'internal'
++  )
++
++  install_headers(
++    'include/vulkan/vulkan_core.h',
++    'include/vulkan/vk_platform.h',
++    subdir : 'internal/vulkan'
++  )
++
++  install_headers(
++    'include/vk_video/vulkan_video_codec_h264std_decode.h',
++    'include/vk_video/vulkan_video_codec_h264std_encode.h',
++    'include/vk_video/vulkan_video_codec_h264std.h',
++    'include/vk_video/vulkan_video_codec_h265std_decode.h',
++    'include/vk_video/vulkan_video_codec_h265std_encode.h',
++    'include/vk_video/vulkan_video_codec_h265std.h',
++    'include/vk_video/vulkan_video_codecs_common.h',
++    subdir : 'internal/vk_video'
++  )
++
++  install_headers(
++    'src/egl/drivers/dri2/egl_dri2.h',
++    'src/egl/main/eglarray.h',
++    'src/egl/main/egldefines.h',
++    'src/egl/main/egltypedefs.h',
++    'src/egl/main/eglconfig.h',
++    'src/egl/main/eglcontext.h',
++    'src/egl/main/eglcurrent.h',
++    'src/egl/main/egldevice.h',
++    'src/egl/main/egldisplay.h',
++    'src/egl/main/egldriver.h',
++    'src/egl/main/eglimage.h',
++    'src/egl/main/egllog.h',
++    'src/egl/main/eglsurface.h',
++    'src/egl/main/eglsync.h',
++    subdir : 'internal',
++  )
++
++  install_headers(
++    'src/gallium/frontends/dri/dri_util.h',
++    subdir : 'internal/gallium/frontends/dri'
++  )
++
++  install_headers(
++    'src/mesa/main/formats.h',
++    'src/mesa/main/glconfig.h',
++    'src/mesa/main/menums.h',
++    subdir : 'internal/main'
++  )
++
++  install_headers(
++    'src/c11/threads.h',
++    'src/c11/time.h',
++    subdir : 'internal/c11'
++  )
++
++  install_headers(
++    'src/util/bitscan.h',
++    'src/util/bitset.h',
++    'src/util/detect.h',
++    'src/util/detect_arch.h',
++    'src/util/detect_cc.h',
++    'src/util/detect_os.h',
++    'src/util/glheader.h',
++    'src/util/macros.h',
++    'src/util/mesa-sha1.h',
++    'src/util/ralloc.h',
++    'src/util/rwlock.h',
++    'src/util/simple_mtx.h',
++    'src/util/u_atomic.h',
++    'src/util/u_call_once.h',
++    'src/util/u_dynarray.h',
++    'src/util/u_endian.h',
++    'src/util/u_math.h',
++    'src/util/u_vector.h',
++    'src/util/xmlconfig.h',
++    subdir : 'internal/util'
++  )
++
++  install_headers(
++    'src/util/sha1/sha1.h',
++    subdir : 'internal/util/sha1'
++  )
++
++  install_headers(
++    'src/util/format/u_formats.h',
++    subdir : 'internal/util/format'
++)
++
++endif
