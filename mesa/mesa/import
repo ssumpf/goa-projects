@@ -14,7 +14,6 @@ PATCHES       := patches/dri2.patch \
                  patches/egl_platform.patch \
                  patches/etnaviv.patch \
                  patches/futex.patch \
-                 patches/intel_gen.patch \
                  patches/intel_ioctl.patch \
                  patches/iris_bufmgr.patch \
                  patches/iris_bufmgr_cache.patch \
