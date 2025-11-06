@@ -27,6 +27,7 @@
  * Local
  */
 #include <platform.h>
+#include <genode_fds.h>
 
 
 static int stride(int value)

@@ -24,6 +24,7 @@
 /*
  * Local
  */
+#include <genode_fds.h>
 #include <platform.h>
 
 
