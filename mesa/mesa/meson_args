@@ -1,6 +1,6 @@
 -Db_lundef=false
 -Ddri3=enabled
--Degl-native-platform=surfaceless
+-Degl-native-platform=genode
 -Degl=enabled
 -Denable-glcpp-tests=false
 -Dgallium-drivers=iris,etnaviv,lima,swrast
