@@ -1,0 +1,13 @@
+phtread_set_name_np is not supported and prints warnings on Genode
+
+--- a/src/util/u_thread.c
++++ b/src/util/u_thread.c
+@@ -84,6 +84,8 @@ void u_thread_setname( const char *name )
+       buf[len] = '\0';
+       pthread_setname_np(pthread_self(), buf);
+    }
++#elif defined(__GENODE__)
++   /* not supported */
+ #elif DETECT_OS_FREEBSD || DETECT_OS_OPENBSD
+    pthread_set_name_np(pthread_self(), name);
+ #elif DETECT_OS_NETBSD

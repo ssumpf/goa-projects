@@ -27,6 +27,7 @@ PATCHES       := patches/dri2.patch \
                  patches/meson_headers.patch \
                  patches/os_dupfd.patch \
                  patches/os_mmap.patch \
+                 patches/pthread_set_name_np.patch \
                  patches/softpipe_cache.patch \
                  patches/sync_wait.patch
 
