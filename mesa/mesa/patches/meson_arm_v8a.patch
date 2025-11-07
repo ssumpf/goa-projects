@@ -1,8 +1,9 @@
-Use target_machine instead of host_machine for arm_v8a, disable iris
+Use target_machine instead of host_machine for arm_v8a, disable iris for arm,
+disable etnaviv/lima on x86
 
 --- a/meson.build
 +++ b/meson.build
-@@ -396,6 +396,11 @@ with_platform_genode = _platforms.contains('genode')
+@@ -396,6 +396,17 @@ with_platform_genode = _platforms.contains('genode')
  
  if with_platform_genode
    with_gallium_kmsro = false
@@ -11,10 +12,16 @@ Use target_machine instead of host_machine for arm_v8a, disable iris
 +  if target_machine.cpu_family() == 'aarch64'
 +    with_gallium_iris  = false
 +  endif
++
++  # disable arm drivers for x86
++  if target_machine.cpu_family() == 'x86_64'
++    with_gallium_lima = false
++    with_gallium_etnaviv = false
++  endif
  endif
  
  with_glx = get_option('glx')
-@@ -1199,7 +1204,7 @@ sse2_arg = []
+@@ -1199,7 +1210,7 @@ sse2_arg = []
  sse2_args = []
  sse41_args = []
  with_sse41 = false
@@ -23,7 +30,7 @@ Use target_machine instead of host_machine for arm_v8a, disable iris
    pre_args += '-DUSE_SSE41'
    with_sse41 = true
  
-@@ -1293,7 +1298,10 @@ dep_ws2_32 = cc.find_library('ws2_32', required : with_platform_windows)
+@@ -1293,7 +1304,10 @@ dep_ws2_32 = cc.find_library('ws2_32', required : with_platform_windows)
  # TODO: shared/static? Is this even worth doing?
  
  with_asm_arch = ''
