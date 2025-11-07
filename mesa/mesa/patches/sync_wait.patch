@@ -1,5 +1,40 @@
 Use drm_poll instead of libc version (see: libdrm -> ioctl_dispatch.cc)
 
+--- a/src/gallium/drivers/etnaviv/etnaviv_fence.c
++++ b/src/gallium/drivers/etnaviv/etnaviv_fence.c
+@@ -25,7 +25,14 @@
+  *    Rob Clark <robclark@freedesktop.org>
+  */
+ 
++/*
++ * On Genode make sure to use patched Mesa version not libdrm version
++ */
++#ifdef __GENODE__
++#include "util/libsync.h"
++#else
+ #include <libsync.h>
++#endif
+ 
+ #include "etnaviv_fence.h"
+ #include "etnaviv_context.h"
+--- a/src/gallium/drivers/lima/lima_fence.c
++++ b/src/gallium/drivers/lima/lima_fence.c
+@@ -23,7 +23,15 @@
+  */
+ 
+ #include <fcntl.h>
++
++/*
++ * On Genode make sure to use patched Mesa version not libdrm version
++ */
++#ifdef __GENODE__
++#include "util/libsync.h"
++#else
+ #include <libsync.h>
++#endif
+ 
+ #include "util/os_file.h"
+ #include <util/u_memory.h>
 --- a/src/util/libsync.h
 +++ b/src/util/libsync.h
 @@ -98,6 +98,7 @@ struct sync_file_info {
