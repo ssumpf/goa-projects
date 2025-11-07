@@ -1,0 +1,50 @@
+Use target_machine instead of host_machine for arm_v8a, disable iris
+
+--- a/meson.build
++++ b/meson.build
+@@ -396,6 +396,11 @@ with_platform_genode = _platforms.contains('genode')
+ 
+ if with_platform_genode
+   with_gallium_kmsro = false
++
++  # disable Intel driver on arm platforms
++  if target_machine.cpu_family() == 'aarch64'
++    with_gallium_iris  = false
++  endif
+ endif
+ 
+ with_glx = get_option('glx')
+@@ -1199,7 +1204,7 @@ sse2_arg = []
+ sse2_args = []
+ sse41_args = []
+ with_sse41 = false
+-if host_machine.cpu_family().startswith('x86')
++if host_machine.cpu_family().startswith('x86') and target_machine.cpu_family() != 'aarch64'
+   pre_args += '-DUSE_SSE41'
+   with_sse41 = true
+ 
+@@ -1293,7 +1298,10 @@ dep_ws2_32 = cc.find_library('ws2_32', required : with_platform_windows)
+ # TODO: shared/static? Is this even worth doing?
+ 
+ with_asm_arch = ''
+-if host_machine.cpu_family() == 'x86'
++if with_platform_genode and target_machine.cpu_family() == 'aarch64'
++  with_asm_arch = 'aarch64'
++  pre_args += ['-DUSE_AARCH64_ASM', '-Wno-missing-braces']
++elif host_machine.cpu_family() == 'x86'
+   if system_has_kms_drm or host_machine.system() == 'gnu'
+     with_asm_arch = 'x86'
+     pre_args += ['-DUSE_X86_ASM']
+--- a/src/util/blake3/meson.build
++++ b/src/util/blake3/meson.build
+@@ -9,6 +9,10 @@ is_windows = host_machine.system() == 'windows'
+ is_msvc = meson.get_compiler('c').get_id() == 'msvc'
+ cpu_family = host_machine.cpu_family()
+ 
++if with_platform_genode
++  cpu_family = target_machine.cpu_family()
++endif
++
+ blake3_x86_no_simd_defs = ['-DBLAKE3_NO_SSE2', '-DBLAKE3_NO_SSE41', '-DBLAKE3_NO_AVX2', '-DBLAKE3_NO_AVX512']
+ 
+ if cpu_family == 'x86_64'

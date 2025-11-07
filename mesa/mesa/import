@@ -24,6 +24,7 @@ PATCHES       := patches/dri2.patch \
                  patches/mesa.patch \
                  patches/meson_build.patch \
                  patches/meson_headers.patch \
+                 patches/meson_arm_v8a.patch \
                  patches/os_dupfd.patch \
                  patches/os_mmap.patch \
                  patches/pthread_set_name_np.patch \
