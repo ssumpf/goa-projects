@@ -1,5 +1,7 @@
-Use target_machine instead of host_machine for arm_v8a, disable iris for arm,
-disable etnaviv/lima on x86
+* Use target_machine instead of host_machine for arm_v8a, disable iris for arm,
+  disable etnaviv/lima on x86
+* make libetnaviv_drm whole archive ('link_whole') becuase 'etna_new_gpu' is not
+  defined otherwise
 
 --- a/meson.build
 +++ b/meson.build
@@ -42,6 +44,26 @@ disable etnaviv/lima on x86
    if system_has_kms_drm or host_machine.system() == 'gnu'
      with_asm_arch = 'x86'
      pre_args += ['-DUSE_X86_ASM']
+--- a/src/gallium/drivers/etnaviv/meson.build
++++ b/src/gallium/drivers/etnaviv/meson.build
+@@ -129,7 +129,7 @@ etnaviv_compiler = executable(
+ 
+ driver_etnaviv = declare_dependency(
+   compile_args : '-DGALLIUM_ETNAVIV',
+-  link_with : [libetnaviv, libetnavivdrm],
++  link_whole : [libetnaviv, libetnavivdrm, libetnaviv_drm],
+   dependencies : idep_nir,
+ )
+ 
+--- a/src/gallium/winsys/etnaviv/drm/meson.build
++++ b/src/gallium/winsys/etnaviv/drm/meson.build
+@@ -25,6 +25,5 @@ libetnavivdrm = static_library(
+     inc_include, inc_src, inc_gallium, inc_gallium_aux, inc_gallium_drivers,
+     inc_etnaviv,
+   ],
+-  link_with: libetnaviv_drm,
+   dependencies : [dep_libdrm, idep_nir_headers, idep_mesautil],
+ )
 --- a/src/util/blake3/meson.build
 +++ b/src/util/blake3/meson.build
 @@ -9,6 +9,10 @@ is_windows = host_machine.system() == 'windows'
