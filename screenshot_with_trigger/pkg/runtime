@@ -1,0 +1,84 @@
+runtime | ram: 39M | caps: 1000 | binary: init
++ requires
+  + gui
+  + capture
+  + file_system | label: target | writeable: yes
+  + event
+  + rtc
++ config
+  + parent-provides
+  | + service ROM
+  | + service PD
+  | + service RM
+  | + service CPU
+  | + service LOG
+  | + service Capture
+  | + service Gui
+  | + service Timer
+  | + service Event
+  | + service File_system
+  | + service Rtc
+  + default | caps: 150
+  + start touch_trigger | ram: 1M
+  | + binary screenshot_trigger
+  | + config | size: 100
+  | + route
+  |   + service Gui
+  |   | + parent | label: trigger
+  |   + any-service
+  |     + parent
+  + start screenshot | ram: 32M
+  | + config
+  | | + libc | stdin: /dev/null | stdout: /dev/log | stderr: /dev/log
+  | | + vfs
+  | |   + fs
+  | |   + dir dev
+  | |     + null
+  | |     + log
+  | + route
+  |   + service ROM | label: trigger
+  |   | + child report
+  |   + service Rtc
+  |   | + parent
+  |   + service File_system
+  |   | + parent | identity: target
+  |   + any-service
+  |     + parent
+  |     + any-child
+  + start report | ram: 1M
+  | + binary report_rom
+  | + provides
+  | | + service Report
+  | | + service ROM
+  | + config
+  | | + policy | label: screenshot -> trigger | report: keys -> screenshot
+  | + route
+  |   + any-service
+  |     + parent
+  |     + any-child
+  + start keys | ram: 1M
+    + binary global_keys_handler
+    + config
+    | + bool screenshot | initial: no
+    | + press KEY_PRINT | bool: screenshot | change: toggle
+    | + report screenshot
+    |   + bool screenshot
+    + route
+      + service Report
+      | + child report
+      + any-service
+        + parent
++ content
+  + rom | label: global_keys_handler
+  + rom | label: init
+  + rom | label: ld.lib.so
+  + rom | label: libc.lib.so
+  + rom | label: libm.lib.so
+  + rom | label: libpng.lib.so
+  + rom | label: report_rom
+  + rom | label: sandbox.lib.so
+  + rom | label: screenshot
+  + rom | label: screenshot_trigger
+  + rom | label: vfs.lib.so
+  + rom | label: zlib.lib.so
+-
