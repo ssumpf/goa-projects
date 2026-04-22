@@ -1,5 +1,5 @@
-_/api/libc
-_/api/posix
-_/api/stdcxx
-_/api/so
-_/api/libiconv
+genodelabs/api/libc
+genodelabs/api/posix
+genodelabs/api/stdcxx
+genodelabs/api/so
+genodelabs/api/libiconv

@@ -1,0 +1,13 @@
+diff --git a/src/belle_sip_headers_impl.c b/src/belle_sip_headers_impl.c
+index b91e0f8..93764cd 100644
+--- a/src/belle_sip_headers_impl.c
++++ b/src/belle_sip_headers_impl.c
+@@ -1988,7 +1988,7 @@ success:
+ #if defined(BELLE_SIP_WINDOWS_UNIVERSAL) || defined(BELLE_SIP_MSC_VER_GREATER_19)
+ 	_get_timezone(&adjust_timezone);
+ #else
+-	adjust_timezone = timezone;
++	adjust_timezone = (time_t)timezone;
+ #endif
+ #endif
+ 

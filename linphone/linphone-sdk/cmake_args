@@ -47,3 +47,4 @@
 # 'libxml2.lib.so.2', which need to relabeled.
 #
 -DCMAKE_SHARED_LIBRARY_SONAME_C_FLAG:STRING=-Wl,-soname,
+-DCMAKE_POLICY_VERSION_MINIMUM=3.5

@@ -1,0 +1,12 @@
+_/raw/linphone-sdk
+_/src/linphone-sdk
+genodelabs/src/init
+genodelabs/src/libc
+genodelabs/src/libiconv
+genodelabs/src/posix
+genodelabs/src/stdcxx
+genodelabs/src/vfs
+genodelabs/src/vfs_jitterentropy
+genodelabs/src/vfs_lxip
+genodelabs/src/vfs_oss
+genodelabs/src/vfs_pipe

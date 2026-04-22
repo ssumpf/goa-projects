@@ -1,6 +1,6 @@
-_/api/libc
-_/api/qt5_base
-_/api/qt5_component
-_/api/qt5_declarative
-_/api/so
-_/api/stdcxx
+genodelabs/api/libc
+genodelabs/api/qt5_base
+genodelabs/api/qt5_component
+genodelabs/api/so
+genodelabs/api/stdcxx
+ssumpf/api/qt5_declarative

@@ -1,0 +1,4 @@
+set search_dir ../linphone-sdk
+
+set version(genodelabs/src/vfs_lxip) 2026-04-16
+set version(genodelabs/src/vfs_oss) 2026-04-16

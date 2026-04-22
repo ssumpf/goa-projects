@@ -1,0 +1,15 @@
+_/raw/linphone-sdk
+_/src/linphone-sdk
+genodelabs/raw/ttf-bitstream-vera-minimal
+genodelabs/src/libc
+genodelabs/src/libiconv
+genodelabs/src/init
+genodelabs/src/posix
+genodelabs/src/stdcxx
+genodelabs/src/terminal
+genodelabs/src/vfs
+genodelabs/src/vfs_jitterentropy
+genodelabs/src/vfs_lxip
+genodelabs/src/vfs_oss
+genodelabs/src/vfs_pipe
+genodelabs/src/vfs_ttf
