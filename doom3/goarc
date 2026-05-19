@@ -14,6 +14,15 @@ switch [set sculpt_version] {
 		set version(ssumpf/src/sdl2)    2025-10-22
 		set version(ssumpf/src/openal)  2025-10-22
 	}
+	26.04 {
+		set version(genodelabs/src/vfs_oss)  2026-05-18
+
+		set version(ssumpf/api/openal)  2026-05-19
+		set version(ssumpf/api/sdl2)    2024-04-11
+
+		set version(ssumpf/src/sdl2)    2026-05-19
+		set version(ssumpf/src/openal)  2026-05-19
+	}
 	default {
 	}
 }
